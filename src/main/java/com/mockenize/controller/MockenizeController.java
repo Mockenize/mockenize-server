@@ -13,7 +13,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import com.mockenize.model.MockBean;
+import com.mockenize.service.MockenizeService;
 
 @Path("/{regex:[^_].*}")
 @Consumes(value = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -21,10 +26,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class MockenizeController {
 
+	@Autowired
+	private MockenizeService mockenizeService;
 
 	@GET
 	public Response get(@Context HttpServletRequest request) {
-		return Response.accepted().build();
+		MockBean mockBean = mockenizeService.getUrlOrId(request.getRequestURI());
+		if (mockBean != null) {
+			return Response.status(mockBean.getResponseCode()).entity(mockBean.getResponse()).build();
+		}
+		return Response.status(HttpStatus.NOT_FOUND.value()).build();
 	}
 
 	@POST

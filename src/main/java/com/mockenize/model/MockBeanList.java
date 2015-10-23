@@ -1,16 +1,16 @@
 package com.mockenize.model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MockBeanList implements Serializable {
-	private static final long serialVersionUID = 1782233209622249291L;
+public class MockBeanList extends MockBean implements Serializable {
+	private static final long serialVersionUID = 1449207764832743670L;
 	private String url;
 	private int timeout = 0;
-	private Collection<MockBean> mockBeans;
+	private List<MockBean> mockBeans;
 
 	public String getUrl() {
 		return url;
@@ -28,11 +28,11 @@ public class MockBeanList implements Serializable {
 		this.timeout = timeout;
 	}
 
-	public Collection<MockBean> getMockBeans() {
+	public List<MockBean> getMockBeans() {
 		return mockBeans;
 	}
 
-	public void setMockBeans(Collection<MockBean> mockBeans) {
+	public void setMockBeans(List<MockBean> mockBeans) {
 		this.mockBeans = mockBeans;
 	}
 

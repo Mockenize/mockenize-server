@@ -1,5 +1,7 @@
 package com.mockenize.service;
 
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +12,23 @@ import com.mockenize.model.MockBeanList;
 public class MockenizeService {
 
 	@Autowired
-	private HazelcastService<MockBean> hazelCastService;
+	private HazelcastService<MockBeanList> hazelCastService;
+
+	private Random random = new Random();
+
+	private static final int FIRST = 0;
 
 	public MockBean getUrlOrId(String urlOrId) {
-		MockBean mockBean = hazelCastService.get(urlOrId);
+		MockBeanList mockBeanList = hazelCastService.get(urlOrId);
+		MockBean mockBean = null;
+		int size = mockBeanList.getMockBeans().size();
+		if (size > 1) {
+			mockBean = mockBeanList.getMockBeans().get(random.nextInt(size));
+		} else if (size == 0) {
+			mockBean = mockBeanList;
+		} else {
+			mockBean = mockBeanList.getMockBeans().get(FIRST);
+		}
 		return mockBean;
 	}
 
@@ -27,6 +42,7 @@ public class MockenizeService {
 	}
 
 	public void insert(MockBeanList mockBeanList) {
+		hazelCastService.insert(mockBeanList.getUrl(), mockBeanList);
 	}
 
 }

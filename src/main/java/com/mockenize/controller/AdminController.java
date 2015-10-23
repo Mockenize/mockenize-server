@@ -28,20 +28,20 @@ public class AdminController {
 	@Path("/{urlOrId}")
 	public Response delete(final @PathParam("urlOrId") String urlOrId) {
 		mockenizeService.delete(urlOrId);
-		return Response.ok().build();
+		return Response.ok("Successfully removed value!").build();
 	}
 
 	@DELETE
 	@Path("/clearAll")
 	public Response clearAll() {
 		mockenizeService.clearAll();
-		return Response.ok().build();
+		return Response.ok("All values were successfully removed!").build();
 	}
 
 	@POST
 	public Response insert(MockBeanList mockBeanList) {
 		mockenizeService.insert(mockBeanList);
-		return Response.ok().build();
+		return Response.ok("All values were successfully inserted!").build();
 	}
 
 }
