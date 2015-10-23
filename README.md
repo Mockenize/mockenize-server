@@ -11,19 +11,24 @@ java -jar mockenize-x.x.x.jar --server.port=8090 (default port is 8080)
 
 - Adding responses mocks
 
+```json
 POST http://localhost:8080/_mockenize
 {
   "url" : "/my_url/test",
   "responseCode" : 202,
   "response" : "Response success!!!"
 }
+```
 
 - Clearing all responses mocks
 
+```json
 DELETE http://localhost:8080/_mockenize/clearAll
+```
 
 - Clearing unique or multiple response mock
 
+```json
 DELETE http://localhost:8080/_mockenize
 
 [
@@ -34,3 +39,4 @@ DELETE http://localhost:8080/_mockenize
     "url" : "/my_second_url/test"
   }
 ]
+```
