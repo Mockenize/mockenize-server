@@ -1,10 +1,12 @@
 package com.mockenize.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -25,9 +27,8 @@ public class AdminController {
 	private MockenizeService mockenizeService;
 
 	@DELETE
-	@Path("/{urlOrId}")
-	public Response delete(final @PathParam("urlOrId") String urlOrId) {
-		mockenizeService.delete(urlOrId);
+	public Response delete(List<Map<String, String>> values) {
+		mockenizeService.delete(values);
 		return Response.ok("Successfully removed value!").build();
 	}
 

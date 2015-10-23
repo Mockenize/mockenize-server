@@ -10,7 +10,8 @@ public class MockBeanList extends MockBean implements Serializable {
 	private static final long serialVersionUID = 1449207764832743670L;
 	private String url;
 	private int timeout = 0;
-	private List<MockBean> mockBeans;
+	
+	private List<MockBean> values;
 
 	public String getUrl() {
 		return url;
@@ -28,12 +29,12 @@ public class MockBeanList extends MockBean implements Serializable {
 		this.timeout = timeout;
 	}
 
-	public List<MockBean> getMockBeans() {
-		return mockBeans;
+	public List<MockBean> getValues() {
+		return values;
 	}
 
-	public void setMockBeans(List<MockBean> mockBeans) {
-		this.mockBeans = mockBeans;
+	public void setMockBeans(List<MockBean> values) {
+		this.values = values;
 	}
 
 }
