@@ -7,7 +7,9 @@ Mockenize uses Hazelcast (hazelcast.com) to store your mocks and Spring Boot (pr
 # Basic use
 
 - Running the server
+```json
 java -jar mockenize-x.x.x.jar --server.port=8090 (default port is 8080)
+```
 
 - Adding responses mocks
 
