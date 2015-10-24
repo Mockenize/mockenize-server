@@ -1,6 +1,7 @@
 package com.mockenize.controller;
 
 import java.util.Map.Entry;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -41,18 +42,23 @@ public class MockenizeController {
 					builder.header(entry.getKey(), entry.getValue());
 				}
 			}
-			return builder.type(mockBean.getContentType()).entity(mockBean.getBody()).build();
+			String contentType = mockBean.getHeaders().get("Content-Type");
+			if(contentType == null) {
+				contentType = MediaType.TEXT_PLAIN;
+			}
+			
+			return builder.type(contentType).entity(mockBean.getBody()).build();
 		}
 		return Response.status(HttpStatus.NOT_FOUND.value()).build();
 	}
 
 	private void sleep(MockBean mockBean) {
 		try {
-			if (mockBean.getMinTimeout() > 0 && mockBean.getMinTimeout() > 0) {
-				
-			} else {
-				Thread.sleep(mockBean.getTimeout() * 1000);
+			int timeout = mockBean.getTimeout();
+			if (mockBean.getMaxTimeout() > 0) {
+				timeout = ThreadLocalRandom.current().nextInt(mockBean.getMinTimeout(), mockBean.getMaxTimeout());
 			}
+			Thread.sleep(timeout * 1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

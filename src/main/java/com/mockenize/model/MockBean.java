@@ -12,7 +12,7 @@ public class MockBean implements Serializable {
 	private String body;
 	private Integer responseCode = 200;
 	private String url;
-	private String contentType;
+	private String method;
 	private Map<String, String> headers = Collections.emptyMap();
 	private int timeout = 0;
 	private int minTimeout = 0;
@@ -42,12 +42,12 @@ public class MockBean implements Serializable {
 		this.url = url;
 	}
 
-	public String getContentType() {
-		return contentType;
+	public String getMethod() {
+		return method;
 	}
 
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
+	public void setMethod(String method) {
+		this.method = method;
 	}
 
 	public Map<String, String> getHeaders() {
