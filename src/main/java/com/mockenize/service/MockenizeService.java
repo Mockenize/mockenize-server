@@ -20,8 +20,8 @@ public class MockenizeService {
 
 	private static final int FIRST = 0;
 
-	public MockBean getUrlOrId(String urlOrId) {
-		MockBeanList mockBeanList = hazelCastService.get(urlOrId);
+	public MockBean getMockBean(String url) {
+		MockBeanList mockBeanList = hazelCastService.get(url);
 		MockBean mockBean = null;
 		int size = mockBeanList.getValues().size();
 		if (size > 1) {

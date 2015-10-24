@@ -31,11 +31,22 @@ public class MockenizeController {
 
 	@GET
 	public Response get(@Context HttpServletRequest request) {
-		MockBean mockBean = mockenizeService.getUrlOrId(request.getRequestURI());
+		MockBean mockBean = mockenizeService.getMockBean(request.getRequestURI());
 		if (mockBean != null) {
-			return Response.status(mockBean.getResponseCode()).entity(mockBean.getResponse()).build();
+			sleep(mockBean);
+			return Response.status(mockBean.getResponseCode()).type(mockBean.getContentType()).entity(mockBean.getResponse()).build();
 		}
 		return Response.status(HttpStatus.NOT_FOUND.value()).build();
+	}
+	
+	private void sleep(MockBean mockBean) {
+		try {
+			if(mockBean.getRangeTimeout() != null) {
+				Thread.sleep(mockBean.getTimeout() * 1000);
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@POST
