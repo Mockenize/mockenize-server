@@ -6,11 +6,17 @@
 
 	<groupId>com.mockenize</groupId>
 	<artifactId>mockenize</artifactId>
-	<version>1.0.0</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Mockenize</name>
 	<description>The complete app for mock your responses</description>
+
+	<scm>
+		<url>https://github.com/mauricioadlima/mockenize</url>
+		<connection>scm:git:git://github.com:mauricioadlima/mockenize.git</connection>
+		<developerConnection>scm:git:git@github.com:mauricioadlima/mockenize.git</developerConnection>
+	</scm>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -57,6 +63,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
 			</plugin>
 		</plugins>
 	</build>
