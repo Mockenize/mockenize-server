@@ -1,6 +1,7 @@
 package com.mockenize.model;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -8,28 +9,21 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MockBean implements Serializable {
 
-	private Map<String, String> headers;
-	private String response;
+	private String body;
 	private Integer responseCode = 200;
 	private String url;
-	private int timeout = 0;
-	private int[] rangeTimeout;
 	private String contentType;
+	private Map<String, String> headers = Collections.emptyMap();
+	private int timeout = 0;
+	private int minTimeout = 0;
+	private int maxTimeout = 0;
 
-	public Map<String, String> getHeaders() {
-		return headers;
+	public String getBody() {
+		return body;
 	}
 
-	public void setHeaders(Map<String, String> headers) {
-		this.headers = headers;
-	}
-
-	public String getResponse() {
-		return response;
-	}
-
-	public void setResponse(String response) {
-		this.response = response;
+	public void setBody(String body) {
+		this.body = body;
 	}
 
 	public Integer getResponseCode() {
@@ -48,6 +42,22 @@ public class MockBean implements Serializable {
 		this.url = url;
 	}
 
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	public Map<String, String> getHeaders() {
+		return headers;
+	}
+
+	public void setHeaders(Map<String, String> headers) {
+		this.headers = headers;
+	}
+
 	public int getTimeout() {
 		return timeout;
 	}
@@ -56,20 +66,20 @@ public class MockBean implements Serializable {
 		this.timeout = timeout;
 	}
 
-	public int[] getRangeTimeout() {
-		return rangeTimeout;
+	public int getMinTimeout() {
+		return minTimeout;
 	}
 
-	public void setRangeTimeout(int[] rangeTimeout) {
-		this.rangeTimeout = rangeTimeout;
+	public void setMinTimeout(int minTimeout) {
+		this.minTimeout = minTimeout;
 	}
 
-	public String getContentType() {
-		return contentType;
+	public int getMaxTimeout() {
+		return maxTimeout;
 	}
 
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
+	public void setMaxTimeout(int maxTimeout) {
+		this.maxTimeout = maxTimeout;
 	}
 
 }

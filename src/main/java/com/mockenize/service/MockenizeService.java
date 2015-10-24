@@ -23,13 +23,15 @@ public class MockenizeService {
 	public MockBean getMockBean(String url) {
 		MockBeanList mockBeanList = hazelCastService.get(url);
 		MockBean mockBean = null;
-		int size = mockBeanList.getValues().size();
-		if (size > 1) {
-			mockBean = mockBeanList.getValues().get(random.nextInt(size));
-		} else if (size == 0) {
-			mockBean = mockBeanList;
-		} else {
-			mockBean = mockBeanList.getValues().get(FIRST);
+		if (mockBeanList != null) {
+			int size = mockBeanList.getValues().size();
+			if (size > 1) {
+				mockBean = mockBeanList.getValues().get(random.nextInt(size));
+			} else if (size == 0) {
+				mockBean = mockBeanList;
+			} else {
+				mockBean = mockBeanList.getValues().get(FIRST);
+			} 
 		}
 		return mockBean;
 	}
