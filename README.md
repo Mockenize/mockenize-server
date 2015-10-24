@@ -19,14 +19,14 @@ POST http://localhost:8080/_mockenize
   "url" : "/my_url/test",
   "method" : "POST",
   "responseCode" : 202,
-  "response" : "Response success!!!"
+  "body" : "Response success!!!",
   "headers" : {
       "Content-Type" : "text/plain"
   }
 }
 ```
 
-- Adding multiple responses mocks
+- Adding multiple responses mocks. The responses will return at random.
 
 ```json
 POST http://localhost:8080/_mockenize
@@ -36,19 +36,52 @@ POST http://localhost:8080/_mockenize
   "values" : [
     {
       "responseCode" : 202,
-      "response" : "Response success!!!",
+      "body" : "Response success!!!",
       "headers" : {
           "Content-Type" : "text/plain"
       }
     },
     {
       "responseCode" : 500,
-      "response" : "Response fail!!!",
+      "body" : "Response fail!!!",
       "headers" : {
           "Content-Type" : "text/plain"
       }
     }
   ]
+}
+```
+
+- Using timeout response. (5 seconds)
+
+```json
+POST http://localhost:8080/_mockenize
+{
+  "url" : "/my_url/test",
+  "method" : "POST",
+  "timeout" : 5,
+  "responseCode" : 202,
+  "body" : "Response success!!!",
+  "headers" : {
+      "Content-Type" : "text/plain"
+  }
+}
+```
+
+- Using interval timeout response. (5 at 10 seconds)
+
+```json
+POST http://localhost:8080/_mockenize
+{
+  "url" : "/my_url/test",
+  "method" : "POST",
+  "minTimeout" : 5,
+  "maxTimeout" : 10,
+  "responseCode" : 202,
+  "body" : "Response success!!!",
+  "headers" : {
+      "Content-Type" : "text/plain"
+  }
 }
 ```
 
