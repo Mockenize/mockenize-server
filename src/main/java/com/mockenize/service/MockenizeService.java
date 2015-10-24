@@ -23,9 +23,9 @@ public class MockenizeService {
 
 	public MockBean getMockBean(String url) {
 		MockBeanList mockBeanList = hazelCastService.get(url);
-		sleep(mockBeanList);
 		MockBean mockBean = null;
 		if (mockBeanList != null) {
+			sleep(mockBeanList);
 			int size = mockBeanList.getValues().size();
 			if (size > 1) {
 				mockBean = mockBeanList.getValues().get(random.nextInt(size));
