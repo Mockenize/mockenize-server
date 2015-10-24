@@ -1,14 +1,21 @@
 # Mockenize
-The complete app for mock your responses
+The complete app for mock your responses.
 
-# Notes
-Mockenize uses Hazelcast (hazelcast.com) to store your mocks and Spring Boot (projects.spring.io/spring-boot) for standalone server
+Mockenize is an efficient server to mock, supports random responses, timeout and any media type. To store the responses, Mockenize uses Hazelcast and to run the standalone server uses Spring Boot.
+Mockenize is free and open source. Contribute if you want!
 
-# Basic use
+# How to use
 
 - Running the server
 ```json
 java -jar mockenize-x.x.x.jar --server.port=8090 (default port is 8080)
+```
+
+- Running with Docker
+
+https://hub.docker.com/r/mauricioadlima/mockenize/ 
+```bash
+docker run -itd -p 8080:8080 mauricioadlima/mockenize
 ```
 
 - Adding basic responses mocks
