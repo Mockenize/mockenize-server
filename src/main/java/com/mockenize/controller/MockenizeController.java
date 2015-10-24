@@ -1,7 +1,6 @@
 package com.mockenize.controller;
 
 import java.util.Map.Entry;
-import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -35,33 +34,27 @@ public class MockenizeController {
 	public Response get(@Context HttpServletRequest request) {
 		MockBean mockBean = mockenizeService.getMockBean(request.getRequestURI());
 		if (mockBean != null) {
-			sleep(mockBean);
 			ResponseBuilder builder = Response.status(mockBean.getResponseCode());
-			if (!mockBean.getHeaders().isEmpty()) {
-				for (Entry<String, String> entry : mockBean.getHeaders().entrySet()) {
-					builder.header(entry.getKey(), entry.getValue());
-				}
-			}
-			String contentType = mockBean.getHeaders().get("Content-Type");
-			if(contentType == null) {
-				contentType = MediaType.TEXT_PLAIN;
-			}
-			
-			return builder.type(contentType).entity(mockBean.getBody()).build();
+			addHeaders(builder, mockBean);
+			return builder.type(getContentType(mockBean)).entity(mockBean.getBody()).build();
 		}
 		return Response.status(HttpStatus.NOT_FOUND.value()).build();
 	}
 
-	private void sleep(MockBean mockBean) {
-		try {
-			int timeout = mockBean.getTimeout();
-			if (mockBean.getMaxTimeout() > 0) {
-				timeout = ThreadLocalRandom.current().nextInt(mockBean.getMinTimeout(), mockBean.getMaxTimeout());
+	private void addHeaders(ResponseBuilder builder, MockBean mockBean) {
+		if (!mockBean.getHeaders().isEmpty()) {
+			for (Entry<String, String> entry : mockBean.getHeaders().entrySet()) {
+				builder.header(entry.getKey(), entry.getValue());
 			}
-			Thread.sleep(timeout * 1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
+	}
+
+	private String getContentType(MockBean mockBean) {
+		String contentType = mockBean.getHeaders().get("Content-Type");
+		if (contentType == null) {
+			contentType = MediaType.TEXT_PLAIN;
+		}
+		return contentType;
 	}
 
 	@POST

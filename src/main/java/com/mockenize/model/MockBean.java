@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MockBean implements Serializable {
 
+	private static final long serialVersionUID = -3389671241241187207L;
 	private String body;
 	private Integer responseCode = 200;
 	private String url;

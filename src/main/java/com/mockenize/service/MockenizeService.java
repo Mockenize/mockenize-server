@@ -3,6 +3,7 @@ package com.mockenize.service;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class MockenizeService {
 
 	public MockBean getMockBean(String url) {
 		MockBeanList mockBeanList = hazelCastService.get(url);
+		sleep(mockBeanList);
 		MockBean mockBean = null;
 		if (mockBeanList != null) {
 			int size = mockBeanList.getValues().size();
@@ -31,13 +33,25 @@ public class MockenizeService {
 				mockBean = mockBeanList;
 			} else {
 				mockBean = mockBeanList.getValues().get(FIRST);
-			} 
+			}
 		}
 		return mockBean;
 	}
 
+	private void sleep(MockBean mockBean) {
+		try {
+			int timeout = mockBean.getTimeout();
+			if (mockBean.getMaxTimeout() > 0) {
+				timeout = ThreadLocalRandom.current().nextInt(mockBean.getMinTimeout(), mockBean.getMaxTimeout());
+			}
+			Thread.sleep(timeout * 1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void delete(List<Map<String, String>> values) {
-		for(Map<String, String> map : values) {
+		for (Map<String, String> map : values) {
 			hazelCastService.delete(map.get("url"));
 		}
 	}
