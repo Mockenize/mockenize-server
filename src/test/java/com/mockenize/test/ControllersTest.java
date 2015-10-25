@@ -44,11 +44,13 @@ public class ControllersTest {
 		String key = "X-KEY";
 		String key2 = "X-KEY";
 		String value = "X-VALUE";
+		String method = "POST";
 
 		MockBeanList mockBeanList = new MockBeanList();
 		mockBeanList.setResponseCode(status);
 		mockBeanList.setBody(body);
 		mockBeanList.setUrl(url);
+		mockBeanList.setMethod(method);
 
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put(key, value);
@@ -59,7 +61,8 @@ public class ControllersTest {
 
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(request.getRequestURI()).thenReturn(url);
-		Response response = mockenizeController.get(request);
+		Mockito.when(request.getMethod()).thenReturn(method);
+		Response response = mockenizeController.post(request);
 
 		assertEquals(status, response.getStatus());
 		assertEquals(contentType, response.getMediaType().toString());
@@ -76,6 +79,7 @@ public class ControllersTest {
 		MockBeanList mockBeanList = new MockBeanList();
 		mockBeanList.setBody(body);
 		mockBeanList.setUrl(url);
+		mockBeanList.setMethod("POST");
 
 		adminController.insert(mockBeanList);
 
@@ -85,7 +89,7 @@ public class ControllersTest {
 
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(request.getRequestURI()).thenReturn(url);
-		Response response = mockenizeController.get(request);
+		Response response = mockenizeController.post(request);
 
 		assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
 	}
@@ -109,6 +113,7 @@ public class ControllersTest {
 		mockBeanList.setBody(body);
 		mockBeanList.setUrl(url);
 		mockBeanList.setTimeout(3);
+		mockBeanList.setMethod("POST");		
 
 		adminController.insert(mockBeanList);
 
@@ -116,7 +121,7 @@ public class ControllersTest {
 		Mockito.when(request.getRequestURI()).thenReturn(url);
 
 		long begin = new Date().getTime();
-		mockenizeController.get(request);
+		mockenizeController.post(request);
 		long end = new Date().getTime();
 
 		assertEquals((end - begin) / 1000, 3);
@@ -133,6 +138,7 @@ public class ControllersTest {
 		mockBeanList.setUrl(url);
 		mockBeanList.setMinTimeout(2);
 		mockBeanList.setMaxTimeout(4);
+		mockBeanList.setMethod("POST");
 
 		adminController.insert(mockBeanList);
 
@@ -140,10 +146,43 @@ public class ControllersTest {
 		Mockito.when(request.getRequestURI()).thenReturn(url);
 
 		long begin = new Date().getTime();
-		mockenizeController.get(request);
+		mockenizeController.post(request);
 		long end = new Date().getTime();
 		int result = (int) ((end - begin) / 1000);
 		assertTrue("Result: " + result, result >= 2 && result <= 4);
+	}
+	
+	@Test
+	public void sameUrlAndDifferentMethod() {
+		String url = "/test/200";
+		String body = "{\"msg\":\"success\"}";
+		int status = 200;
+		String contentType = "application/json";
+		String method = "POST";
+
+		MockBeanList mockBeanList = new MockBeanList();
+		mockBeanList.setResponseCode(status);
+		mockBeanList.setBody(body);
+		mockBeanList.setUrl(url);
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Content-Type", contentType);
+		mockBeanList.setHeaders(headers);
+		mockBeanList.setMethod(method);
+
+		adminController.insert(mockBeanList);
+
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		Mockito.when(request.getRequestURI()).thenReturn(url);
+		Mockito.when(request.getMethod()).thenReturn(method);
+		
+		Response response = mockenizeController.post(request);
+		assertEquals(status, response.getStatus());
+		assertEquals(contentType, response.getMediaType().toString());
+		assertEquals(body, response.getEntity());
+		
+		Mockito.when(request.getMethod()).thenReturn("GET");
+		Response response1 = mockenizeController.get(request);
+		assertEquals(HttpStatus.NOT_FOUND.value(), response1.getStatus());
 	}
 
 }

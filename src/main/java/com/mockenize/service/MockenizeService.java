@@ -21,8 +21,8 @@ public class MockenizeService {
 
 	private static final int FIRST = 0;
 
-	public MockBean getMockBean(String url) {
-		MockBeanList mockBeanList = hazelCastService.get(url);
+	public MockBean getMockBean(String method, String url) {
+		MockBeanList mockBeanList = hazelCastService.get(method + url);
 		MockBean mockBean = null;
 		if (mockBeanList != null) {
 			sleep(mockBeanList);
@@ -61,7 +61,22 @@ public class MockenizeService {
 	}
 
 	public void insert(MockBeanList mockBeanList) {
-		hazelCastService.insert(mockBeanList.getUrl(), mockBeanList);
+		if(mockBeanList.getValues().isEmpty()) {
+			validate(mockBeanList);
+		} else {
+			for (MockBean mb : mockBeanList.getValues()) {
+				validate(mb);
+			}
+		}
+		hazelCastService.insert(mockBeanList.getMethod() + mockBeanList.getUrl(), mockBeanList);
+	}
+	
+	private void validate(MockBean mockBean) {
+		if(mockBean.getMethod() == null) {
+			throw new IllegalArgumentException("Method cannot be null!");
+		} else if(mockBean.getUrl() == null) {
+			throw new IllegalArgumentException("URL cannot be null!");
+		}
 	}
 
 }

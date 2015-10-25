@@ -32,7 +32,7 @@ public class MockenizeController {
 
 	@GET
 	public Response get(@Context HttpServletRequest request) {
-		MockBean mockBean = mockenizeService.getMockBean(request.getRequestURI());
+		MockBean mockBean = mockenizeService.getMockBean(request.getMethod(), request.getRequestURI());
 		if (mockBean != null) {
 			ResponseBuilder builder = Response.status(mockBean.getResponseCode());
 			addHeaders(builder, mockBean);
