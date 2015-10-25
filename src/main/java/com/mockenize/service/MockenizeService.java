@@ -8,6 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mockenize.exception.ValidationException;
 import com.mockenize.model.MockBean;
 import com.mockenize.model.MockBeanList;
 
@@ -61,21 +62,15 @@ public class MockenizeService {
 	}
 
 	public void insert(MockBeanList mockBeanList) {
-		if(mockBeanList.getValues().isEmpty()) {
-			validate(mockBeanList);
-		} else {
-			for (MockBean mb : mockBeanList.getValues()) {
-				validate(mb);
-			}
-		}
+		validate(mockBeanList);
 		hazelCastService.insert(mockBeanList.getMethod() + mockBeanList.getUrl(), mockBeanList);
 	}
 	
 	private void validate(MockBean mockBean) {
 		if(mockBean.getMethod() == null) {
-			throw new IllegalArgumentException("Method cannot be null!");
+			throw new ValidationException("Method cannot be null!");
 		} else if(mockBean.getUrl() == null) {
-			throw new IllegalArgumentException("URL cannot be null!");
+			throw new ValidationException("URL cannot be null!");
 		}
 	}
 
