@@ -1,6 +1,7 @@
 package com.mockenize.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -8,8 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
+import org.eclipse.jetty.http.HttpStatus;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,11 +20,12 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mockenize.controller.AdminController;
 import com.mockenize.controller.MockenizeController;
+import com.mockenize.exception.ResourceNotFoundException;
+import com.mockenize.exception.ValidationException;
 import com.mockenize.model.MockBeanList;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -71,7 +75,7 @@ public class ControllersTest {
 		assertEquals(value, response.getHeaderString(key2));
 	}
 
-	@Test
+	@Test(expected = ResourceNotFoundException.class)
 	public void deleteMock() {
 		String url = "/test/200";
 		String body = "{\"msg\":\"success\"}";
@@ -89,18 +93,16 @@ public class ControllersTest {
 
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(request.getRequestURI()).thenReturn(url);
-		Response response = mockenizeController.post(request);
-
-		assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+		mockenizeController.post(request);
 	}
 
-	@Test
+	@Test(expected = ResourceNotFoundException.class)
 	public void getNotFound() {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-		Mockito.when(request.getRequestURI()).thenReturn("");
+		Mockito.when(request.getRequestURI()).thenReturn("/test");
 		Response response = mockenizeController.get(request);
 
-		assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+		assertEquals(HttpStatus.NOT_FOUND_404, response.getStatus());
 	}
 
 	@Test
@@ -113,7 +115,7 @@ public class ControllersTest {
 		mockBeanList.setBody(body);
 		mockBeanList.setUrl(url);
 		mockBeanList.setTimeout(3);
-		mockBeanList.setMethod("POST");		
+		mockBeanList.setMethod("POST");
 
 		adminController.insert(mockBeanList);
 
@@ -151,7 +153,7 @@ public class ControllersTest {
 		int result = (int) ((end - begin) / 1000);
 		assertTrue("Result: " + result, result >= 2 && result <= 4);
 	}
-	
+
 	@Test
 	public void sameUrlAndDifferentMethod() {
 		String url = "/test/200";
@@ -174,15 +176,25 @@ public class ControllersTest {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(request.getRequestURI()).thenReturn(url);
 		Mockito.when(request.getMethod()).thenReturn(method);
-		
+
 		Response response = mockenizeController.post(request);
 		assertEquals(status, response.getStatus());
 		assertEquals(contentType, response.getMediaType().toString());
 		assertEquals(body, response.getEntity());
-		
+
 		Mockito.when(request.getMethod()).thenReturn("GET");
-		Response response1 = mockenizeController.get(request);
-		assertEquals(HttpStatus.NOT_FOUND.value(), response1.getStatus());
+		try {
+			mockenizeController.get(request);
+		} catch (WebApplicationException e) {
+			status = e.getResponse().getStatus();
+		}
+		assertEquals(HttpStatus.NOT_FOUND_404, status);
+	}
+
+	@Test(expected = ValidationException.class)
+	public void validation() {
+		MockBeanList mockBeanList = new MockBeanList();
+		adminController.insert(mockBeanList);
 	}
 
 }

@@ -16,9 +16,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 
+import com.mockenize.exception.ResourceNotFoundException;
 import com.mockenize.model.MockBean;
 import com.mockenize.service.MockenizeService;
 
@@ -38,7 +38,7 @@ public class MockenizeController {
 			addHeaders(builder, mockBean);
 			return builder.type(getContentType(mockBean)).entity(mockBean.getBody()).build();
 		}
-		return Response.status(HttpStatus.NOT_FOUND.value()).build();
+		throw new ResourceNotFoundException();
 	}
 
 	private void addHeaders(ResponseBuilder builder, MockBean mockBean) {
