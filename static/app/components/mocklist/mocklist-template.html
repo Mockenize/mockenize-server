@@ -14,9 +14,9 @@
 
                 <div class="list-group">
                     <div class="list-group-item" ng-show="vm.hasMocks()">No mocks registered.</div>
-                    <div class="list-group-item" ng-repeat="(url, mock) in vm.mocks">
+                    <div class="list-group-item" ng-repeat="(key, mock) in vm.mocks">
                         <div class="pull-right">
-                            <button class="btn btn-danger btn-xs" ng-click="vm.deleteMock(url)">
+                            <button class="btn btn-danger btn-xs" ng-click="vm.deleteMock(key)">
                                 <i class="glyphicon glyphicon-trash"></i>
                             </button>
                         </div>
@@ -24,7 +24,7 @@
                         <span class="label label-default label-http-method">{{mock.method}}</span>
 
                         <a href="#" class="list-group-item-heading" ng-click="vm.selectMock(mock)">
-                            {{url}}
+                            {{mock.url}}
                         </a>
                     </div>
                 </div>
