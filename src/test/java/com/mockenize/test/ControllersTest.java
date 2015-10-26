@@ -115,7 +115,7 @@ public class ControllersTest {
 		mockBeanList.setBody(body);
 		mockBeanList.setUrl(url);
 		mockBeanList.setTimeout(3);
-		mockBeanList.setMethod("POST");
+		mockBeanList.setMethod("POST");		
 
 		adminController.insert(mockBeanList);
 
@@ -153,7 +153,7 @@ public class ControllersTest {
 		int result = (int) ((end - begin) / 1000);
 		assertTrue("Result: " + result, result >= 2 && result <= 4);
 	}
-
+	
 	@Test
 	public void sameUrlAndDifferentMethod() {
 		String url = "/test/200";
@@ -176,12 +176,12 @@ public class ControllersTest {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(request.getRequestURI()).thenReturn(url);
 		Mockito.when(request.getMethod()).thenReturn(method);
-
+		
 		Response response = mockenizeController.post(request);
 		assertEquals(status, response.getStatus());
 		assertEquals(contentType, response.getMediaType().toString());
 		assertEquals(body, response.getEntity());
-
+		
 		Mockito.when(request.getMethod()).thenReturn("GET");
 		try {
 			mockenizeController.get(request);

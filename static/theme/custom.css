@@ -1,0 +1,13 @@
+.label.label-http-method {
+    display: inline-block;
+    min-width: 52px;
+    margin-right: 5px;
+}
+
+.table th, .table td{
+    vertical-align: middle !important;
+}
+
+.nav-tabs {
+    margin-bottom: 5px;
+}

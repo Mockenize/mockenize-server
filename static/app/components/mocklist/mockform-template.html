@@ -1,0 +1,89 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="vm.dismiss()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Create Mock</h4>
+</div>
+
+<form name="vm.mockForm" ng-submit="vm.save()" novalidate>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="mock-url" class="control-label">Url</label>
+            <input id="mock-url" name="mockUrl" type="text" class="form-control" ng-model="vm.mock.url" ng-required="true">
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="mock-method" class="control-label">Method</label>
+                <select id="mock-method" name="mockMethod" class="form-control" ng-model="vm.mock.method" ng-required="true">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="mock-response-code" class="control-label">Response code</label>
+                <input id="mock-response-code" name="mockResponseCode" type="number" class="form-control" ng-model="vm.mock.responseCode" ng-required="true">
+            </div>
+        </div>
+
+        <tabset>
+            <tab heading="Body">
+                <textarea name="mock-body" id="mock-body" ui-codemirror="vm.codeMirrorOptions" ng-model="vm.mock.body"></textarea>
+            </tab>
+
+            <tab heading="Headers">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th colspan="2">Value</th>
+                    </tr>
+                    </thead>
+
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control input-sm" ng-model="vm.newHeaderKey" title="Key">
+                        </td>
+
+                        <td>
+                            <input type="text" class="form-control input-sm" ng-model="vm.newHeaderValue" title="Value">
+                        </td>
+
+                        <td>
+                            <button type="button" class="btn btn-sm btn-block btn-success" ng-click="vm.addHeader()">
+                                <i class="glyphicon glyphicon-ok"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr ng-repeat="(key, value) in vm.mock.headers">
+                        <td>
+                            <a href="#" class="btn btn-sm btn-link" ng-click="vm.selectHeader(key)">{{key}}</a>
+                        </td>
+
+                        <td>
+                            {{value}}
+                        </td>
+
+                        <td>
+                            <button type="button" class="btn btn-sm btn-block btn-danger" ng-click="vm.removeHeader(key)">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </tab>
+        </tabset>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.dismiss()">
+            <i class="glyphicon glyphicon-remove"></i> Close
+        </button>
+
+        <button type="submit" class="btn btn-primary" ng-disabled="!vm.isValid()">
+            <i class="glyphicon glyphicon-ok"></i> Save
+        </button>
+    </div>
+</form>
