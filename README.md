@@ -106,8 +106,9 @@ DELETE http://localhost:8080/_mockenize
 ]
 ```
 
-- Use the admin to easily create your mocks
-  The admin is a collaboration of Watanabe (https://github.com/rseidi)
+- Use the admin to easily create your mocks.
+
+The admin is a collaboration of Watanabe (https://github.com/rseidi)
 
 ```json
 http://localhost:8080/_mockenize/index.html
