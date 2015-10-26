@@ -18,6 +18,14 @@
 		<tag>HEAD</tag>
 	</scm>
 
+	<distributionManagement>
+		<repository>
+			<id>local-repository</id>
+			<name>Test local repository</name>
+			<url>file:///home/mauricioadlima/repository</url>
+		</repository>
+	</distributionManagement>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
