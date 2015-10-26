@@ -1,6 +1,7 @@
 package com.mockenize;
 
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.stereotype.Component;
 
 import com.mockenize.controller.AdminController;
@@ -14,5 +15,7 @@ public class JerseyConfig extends ResourceConfig {
         register(AdminController.class);
         register(MockenizeController.class);
         register(ExceptionMapper.class);
+        property(ServletProperties.FILTER_FORWARD_ON_404, true);
+        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, ".*\\.(html|css|js|woff|woff2|ttf)");
     }
 }
