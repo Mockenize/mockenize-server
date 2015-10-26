@@ -12,8 +12,6 @@ import com.mockenize.exception.ValidationException;
 import com.mockenize.model.MockBean;
 import com.mockenize.model.MockBeanList;
 
-import javax.ws.rs.core.Response;
-
 @Service
 public class MockenizeService {
 
