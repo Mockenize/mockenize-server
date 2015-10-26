@@ -1,0 +1,69 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="pull-right">
+                        <button class="btn btn-success btn-xs" ng-click="vm.openMockForm()">
+                            <i class="glyphicon glyphicon-plus"></i> Create mock
+                        </button>
+                    </div>
+
+                    <h2 class="panel-title">Mocks</h2>
+                </div>
+
+                <div class="list-group">
+                    <div class="list-group-item" ng-show="vm.hasMocks()">No mocks registered.</div>
+                    <div class="list-group-item" ng-repeat="(url, mock) in vm.mocks">
+                        <div class="pull-right">
+                            <button class="btn btn-danger btn-xs" ng-click="vm.deleteMock(url)">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </button>
+                        </div>
+
+                        <span class="label label-default label-http-method">{{mock.method}}</span>
+
+                        <a href="#" class="list-group-item-heading" ng-click="vm.selectMock(mock)">
+                            {{url}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="jumbotron text-center" ng-hide="vm.selectedMock">
+                <h2>Please, select a mock to visualize!</h2>
+            </div>
+
+            <div class="panel panel-default" ng-show="vm.selectedMock">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="150">Url</th>
+                        <td>{{vm.selectedMock.url}}</td>
+                    </tr>
+                    <tr>
+                        <th>Method</th>
+                        <td>{{vm.selectedMock.method}}</td>
+                    </tr>
+                    <tr>
+                        <th>Response code</th>
+                        <td>{{vm.selectedMock.responseCode}}</td>
+                    </tr>
+                    <tr>
+                        <th rowspan="{{vm.countKeys(vm.selectedMock.headers)}}">Headers</th>
+                    </tr>
+
+                    <tr ng-repeat="(key, value) in vm.selectedMock.headers">
+                        <td>{{key}}: {{value}}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Body</th>
+                        <td>{{vm.selectedMock.body}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

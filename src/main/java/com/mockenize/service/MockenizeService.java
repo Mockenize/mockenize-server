@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.mockenize.model.MockBean;
 import com.mockenize.model.MockBeanList;
 
+import javax.ws.rs.core.Response;
+
 @Service
 public class MockenizeService {
 
@@ -64,4 +66,7 @@ public class MockenizeService {
 		hazelCastService.insert(mockBeanList.getUrl(), mockBeanList);
 	}
 
+	public Map<String, MockBeanList> getAllMockBeans() {
+		return hazelCastService.getAll();
+	}
 }

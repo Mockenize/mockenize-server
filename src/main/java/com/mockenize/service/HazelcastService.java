@@ -35,4 +35,7 @@ public class HazelcastService<T> {
 		cache.clear();
 	}
 
+	public Map<String, T> getAll() {
+		return instance.getMap(CACHE_KEY);
+	}
 }
