@@ -3,9 +3,13 @@ package com.mockenize.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,9 +28,8 @@ public class AdminController {
 	private MockenizeService mockenizeService;
 
 	@GET
-	public Response getAll() {
-		Map<String, MockBeanList> mockBeanList = mockenizeService.getAllMockBeans();
-		return Response.ok(mockBeanList).build();
+	public Map<String, MockBeanList> getAll() {
+		return mockenizeService.getAllMockBeans();
 	}
 	@DELETE
 	public ReturnBean delete(List<Map<String, String>> values) {

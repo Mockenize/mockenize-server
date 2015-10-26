@@ -4,6 +4,6 @@ mockenize.directive('mockList', function () {
         replace: true,
         controller: 'mockListController',
         controllerAs: 'vm',
-        templateUrl: '/app/components/mocklist/mocklist-template.html'
+        templateUrl: 'app/components/mocklist/mocklist-template.html'
     }
 });

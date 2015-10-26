@@ -18,7 +18,7 @@ mockenize.controller('mockListController', function ($uibModal, codeMirrorOption
             bindToController: true,
             controllerAs: 'vm',
             modal: 'lg',
-            templateUrl: '/app/components/mocklist/mockform-template.html'
+            templateUrl: 'app/components/mocklist/mockform-template.html'
         });
 
         instance.result.then(function (mock) {

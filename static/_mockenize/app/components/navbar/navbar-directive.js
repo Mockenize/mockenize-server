@@ -4,6 +4,6 @@
 mockenize.directive('navbar', function () {
     return {
         restrict: 'E',
-        templateUrl: '/app/components/navbar/navbar-template.html'
+        templateUrl: 'app/components/navbar/navbar-template.html'
     };
 });
