@@ -11,13 +11,6 @@ Mockenize is free and open source. Contribute if you want!
 java -jar mockenize-x.x.x.jar --server.port=8090 (default port is 8080)
 ```
 
-- Running with Docker
-
-https://hub.docker.com/r/mauricioadlima/mockenize/ 
-```bash
-docker run -itd -p 8080:8080 mauricioadlima/mockenize
-```
-
 - Adding basic responses mocks
 
 ```json
@@ -111,4 +104,11 @@ DELETE http://localhost:8080/_mockenize
     "url" : "/my_second_url/test"
   }
 ]
+```
+
+- Use the admin to easily create your mocks
+  The admin is a collaboration of Watanabe (https://github.com/rseidi)
+
+```json
+http://localhost:8080/_mockenize/index.html
 ```
