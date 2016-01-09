@@ -4,7 +4,7 @@
 
 	<groupId>com.mockenize</groupId>
 	<artifactId>mockenize</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.3</version>
 	<packaging>jar</packaging>
 
 	<name>Mockenize</name>
@@ -14,7 +14,7 @@
 		<url>https://github.com/mauricioadlima/mockenize</url>
 		<connection>scm:git:git://github.com:mauricioadlima/mockenize.git</connection>
 		<developerConnection>scm:git:git@github.com:mauricioadlima/mockenize.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>mockenize-0.0.3</tag>
 	</scm>
 
 	<distributionManagement>
