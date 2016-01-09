@@ -19,7 +19,7 @@ function uiCodemirrorDirective($timeout, uiCodemirrorConfig) {
 
       // Require CodeMirror
       if (angular.isUndefined(window.CodeMirror)) {
-        throw new Error('ui-codemirror needs CodeMirror to work... (o rly?)');
+        throw new Error('static-codemirror needs CodeMirror to work... (o rly?)');
       }
 
       return postLink;
@@ -107,7 +107,7 @@ function uiCodemirrorDirective($timeout, uiCodemirrorConfig) {
       if (angular.isUndefined(value) || value === null) {
         return '';
       } else if (angular.isObject(value) || angular.isArray(value)) {
-        throw new Error('ui-codemirror cannot use an object or an array as a model');
+        throw new Error('static-codemirror cannot use an object or an array as a model');
       }
       return value;
     });

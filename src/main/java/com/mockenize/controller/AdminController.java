@@ -1,17 +1,24 @@
 package com.mockenize.controller;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 
 import com.mockenize.model.MockBeanList;
@@ -27,10 +34,21 @@ public class AdminController {
 	@Autowired
 	private MockenizeService mockenizeService;
 
+	@Autowired
+	private ResourceLoader resourceLoader;
+
+	@GET
+	@Produces(MediaType.TEXT_HTML)
+	public Response showUi(@Context HttpServletResponse servletResponse) throws IOException {
+		URI uri = UriBuilder.fromPath("/_mockenize/index.html").build();
+		return Response.seeOther(uri).build();
+	}
+
 	@GET
 	public Map<String, MockBeanList> getAll() {
 		return mockenizeService.getAllMockBeans();
 	}
+
 	@DELETE
 	public ReturnBean delete(List<Map<String, String>> values) {
 		mockenizeService.delete(values);

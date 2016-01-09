@@ -1,0 +1,98 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">Mock Form</h4>
+    </div>
+
+    <form name="vm.mockForm" ng-submit="vm.save()" novalidate>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label for="mock-url" class="control-label">Url</label>
+                <input id="mock-url" name="mockUrl" type="text" class="form-control" ng-model="vm.model.url"
+                       ng-required="true">
+            </div>
+
+            <div class="row">
+                <div class="form-group form-group-sm col-md-6">
+                    <label for="mock-method" class="control-label">Method</label>
+                    <select id="mock-method" name="mockMethod" class="form-control" ng-model="vm.model.method"
+                            ng-options="method for method in vm.httpMethods" ng-required="true">
+                    </select>
+                </div>
+
+                <div class="form-group form-group-sm col-md-6">
+                    <label for="mock-response-code" class="control-label">Response code</label>
+                    <input id="mock-response-code" name="mockResponseCode" type="text" class="form-control"
+                           ng-model="vm.model.responseCode" ng-required="true" uib-typeahead="status.code for status in vm.statusCodes | filter:{label:$viewValue} | limitTo:8" typeahead-template-url="statusCodesListTemplate">
+                </div>
+
+                <div class="form-group form-group-sm col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">Headers</div>
+                        </div>
+
+                        <table class="table table-condensed">
+                            <tr>
+                                <th>Key</th>
+                                <th colspan="2">Value</th>
+                            </tr>
+                            </thead>
+
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control input-sm" ng-model="vm.newHeaderKey" uib-typeahead="header for header in vm.httpHeaders | filter:$viewValue | limitTo:8" title="Key">
+                                </td>
+
+                                <td>
+                                    <input type="text" class="form-control input-sm" ng-model="vm.newHeaderValue"
+                                           title="Value">
+                                </td>
+
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-block btn-success"
+                                            ng-click="vm.addHeader()">
+                                        <i class="glyphicon glyphicon-ok"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr ng-repeat="(key, value) in vm.model.headers">
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-link" ng-click="vm.selectHeader(key)">{{key}}</a>
+                                </td>
+
+                                <td>
+                                    {{value}}
+                                </td>
+
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-block btn-danger"
+                                            ng-click="vm.removeHeader(key)">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="form-group form-group-sm col-md-12">
+                    <textarea name="mock-body" id="mock-body" ui-codemirror="vm.codeMirrorOptions"
+                              ng-model="vm.model.body"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-disabled="!vm.isValid()">
+                <i class="glyphicon glyphicon-ok"></i> Save
+            </button>
+        </div>
+    </form>
+
+    <script type="text/ng-template" id="statusCodesListTemplate">
+        <a>
+            <span ng-bind-html="match.model.label | uibTypeaheadHighlight:query"></span>
+        </a>
+    </script>
+</div>

@@ -33,37 +33,10 @@
 
         <div class="col-md-8">
             <div class="jumbotron text-center" ng-hide="vm.selectedMock">
-                <h2>Please, select a mock to visualize!</h2>
+                <h2>Please, select a mock or create a mock!</h2>
             </div>
 
-            <div class="panel panel-default" ng-show="vm.selectedMock">
-                <table class="table table-bordered">
-                    <tr>
-                        <th width="150">Url</th>
-                        <td>{{vm.selectedMock.url}}</td>
-                    </tr>
-                    <tr>
-                        <th>Method</th>
-                        <td>{{vm.selectedMock.method}}</td>
-                    </tr>
-                    <tr>
-                        <th>Response code</th>
-                        <td>{{vm.selectedMock.responseCode}}</td>
-                    </tr>
-                    <tr>
-                        <th rowspan="{{vm.countKeys(vm.selectedMock.headers)}}">Headers</th>
-                    </tr>
-
-                    <tr ng-repeat="(key, value) in vm.selectedMock.headers">
-                        <td>{{key}}: {{value}}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Body</th>
-                        <td>{{vm.selectedMock.body}}</td>
-                    </tr>
-                </table>
-            </div>
+            <mock-form ng-show="vm.selectedMock" model="vm.selectedMock"></mock-form>
         </div>
     </div>
 </div>

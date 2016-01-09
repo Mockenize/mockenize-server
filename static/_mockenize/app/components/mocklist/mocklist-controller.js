@@ -1,10 +1,11 @@
 /**
  * Created by rodrigo on 10/25/15.
  */
-mockenize.controller('mockListController', function ($uibModal, codeMirrorOptions, mockenizeService) {
+mockenize.controller('mockListController', function (codeMirrorOptions, mockenizeService) {
     var vm = this;
     vm.codeMirrorOptions = codeMirrorOptions;
     vm.mocks = {};
+    vm.selectedMock = null;
 
     loadMocks();
 
@@ -13,21 +14,18 @@ mockenize.controller('mockListController', function ($uibModal, codeMirrorOption
     };
 
     vm.openMockForm = function () {
-        var instance = $uibModal.open({
-            controller: 'mockFormController',
-            bindToController: true,
-            controllerAs: 'vm',
-            modal: 'lg',
-            templateUrl: 'app/components/mocklist/mockform-template.html'
-        });
+        vm.selectedMock = {
+            method: 'GET',
+            responseCode: 200,
+            headers: {}
+        };
 
-        instance.result.then(function (mock) {
-            loadMocks();
-        })
+        vm.mockForm.load(vm.selectedMock).then(loadMocks);
     };
 
     vm.selectMock = function (mock) {
         vm.selectedMock = mock;
+        vm.mockForm.load(angular.copy(mock)).then(loadMocks);
     };
 
     vm.deleteMock = function (url) {

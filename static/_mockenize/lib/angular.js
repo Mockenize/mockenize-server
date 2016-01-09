@@ -28449,7 +28449,7 @@ var SelectController =
  *         {id: '2', name: 'Option B'},
  *         {id: '3', name: 'Option C'}
  *       ],
- *       selectedOption: {id: '3', name: 'Option C'} //This sets the default value of the select in the ui
+ *       selectedOption: {id: '3', name: 'Option C'} static
  *       };
  *   }]);
  * </file>

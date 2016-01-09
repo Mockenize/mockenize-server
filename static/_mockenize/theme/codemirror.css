@@ -1,14 +1,15 @@
 /* BASICS */
-
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: monospace;
-  height: 300px;
+  height: auto;
   border-radius: 5px;
 }
 .CodeMirror-scroll {
   /* Set scrolling behaviour here */
-  overflow: auto;
+  overflow-y: hidden;
+  overflow-x: auto;
+  min-height: 250px;
 }
 
 /* PADDING */

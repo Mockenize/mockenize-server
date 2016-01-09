@@ -513,7 +513,7 @@ angular.module('ui.bootstrap.buttons', [])
         element.toggleClass(buttonsCtrl.activeClass, angular.equals(ngModelCtrl.$modelValue, scope.$eval(attrs.uibBtnRadio)));
       };
 
-      //ui->model
+      //static->model
       element.on(buttonsCtrl.toggleEvent, function() {
         if (attrs.disabled) {
           return;
@@ -559,7 +559,7 @@ angular.module('ui.bootstrap.buttons', [])
         element.toggleClass(buttonsCtrl.activeClass, angular.equals(ngModelCtrl.$modelValue, getTrueValue()));
       };
 
-      //ui->model
+      //static->model
       element.on(buttonsCtrl.toggleEvent, function() {
         if (attrs.disabled) {
           return;
@@ -607,7 +607,7 @@ angular.module('ui.bootstrap.buttons')
           element.toggleClass(buttonsCtrl.activeClass, angular.equals(ngModelCtrl.$modelValue, scope.$eval(attrs.btnRadio)));
         };
 
-        //ui->model
+        //static->model
         element.bind(buttonsCtrl.toggleEvent, function() {
           if (attrs.disabled) {
             return;
@@ -658,7 +658,7 @@ angular.module('ui.bootstrap.buttons')
           element.toggleClass(buttonsCtrl.activeClass, angular.equals(ngModelCtrl.$modelValue, getTrueValue()));
         };
 
-        //ui->model
+        //static->model
         element.bind(buttonsCtrl.toggleEvent, function() {
           if (attrs.disabled) {
             return;
