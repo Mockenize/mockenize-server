@@ -113,4 +113,4 @@ The admin is a collaboration of Watanabe (https://github.com/rseidi)
 ```json
 http://localhost:8080/_mockenize/index.html
 ```
-[Mockenize](http://i.imgur.com/yda2C8u.png)
+![Mockenize](http://i.imgur.com/yda2C8u.png)
