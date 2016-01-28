@@ -16,6 +16,5 @@ public class JerseyConfig extends ResourceConfig {
         register(MockenizeController.class);
         register(ExceptionMapper.class);
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
-        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/_mockenize/.*\\.(html|css|js|woff|woff2|ttf)");
     }
 }

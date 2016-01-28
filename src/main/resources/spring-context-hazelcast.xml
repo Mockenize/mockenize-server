@@ -15,7 +15,7 @@
                     <hz:multicast enabled="false" multicast-group="224.2.2.3"
                                   multicast-port="54327"/>
                     <hz:tcp-ip enabled="true">
-                        <hz:members>"${hazelcast.server.host}"</hz:members>
+                        <hz:members>${hazelcast.server.host}</hz:members>
                     </hz:tcp-ip>
                 </hz:join>
             </hz:network>

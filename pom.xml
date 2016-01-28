@@ -34,9 +34,15 @@
 
 	<properties>
 		<java.version>1.7</java.version>
+		<guava.version>18.0</guava.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -74,11 +80,14 @@
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
+
 			<resource>
-				<directory>static</directory>
-				<targetPath>static</targetPath>
+				<directory>src/main/webapp</directory>
+				<targetPath>webapp</targetPath>
+				<filtering>false</filtering>
 			</resource>
 		</resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

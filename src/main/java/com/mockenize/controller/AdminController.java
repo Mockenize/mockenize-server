@@ -1,24 +1,20 @@
 package com.mockenize.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
+import javax.ws.rs.*;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+import com.google.common.io.ByteStreams;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 
 import com.mockenize.model.MockBeanList;
@@ -34,14 +30,23 @@ public class AdminController {
 	@Autowired
 	private MockenizeService mockenizeService;
 
-	@Autowired
-	private ResourceLoader resourceLoader;
-
 	@GET
 	@Produces(MediaType.TEXT_HTML)
-	public Response showUi(@Context HttpServletResponse servletResponse) throws IOException {
+	public Response redirectToAdmin() throws IOException {
 		URI uri = UriBuilder.fromPath("/_mockenize/index.html").build();
 		return Response.seeOther(uri).build();
+	}
+
+	@GET
+	@Path( "/{path: .*\\.(html|css|js|woff|woff2|ttf)}")
+	public Response serveStatic(@PathParam("path") String path) throws IOException, URISyntaxException {
+		InputStream inputStream = getClass().getResourceAsStream("/webapp/" + path);
+		byte[] content = ByteStreams.toByteArray(inputStream);
+
+		return Response.ok(content)
+			.header(HttpHeaders.CONTENT_TYPE, getContentType(path))
+			.header(HttpHeaders.CONTENT_LENGTH, content.length)
+			.build();
 	}
 
 	@GET
@@ -66,6 +71,33 @@ public class AdminController {
 	public ReturnBean insert(MockBeanList mockBeanList) {
 		mockenizeService.insert(mockBeanList);
 		return new ReturnBean("All values were successfully inserted!");
+	}
+
+	private String getContentType(@PathParam("path") String path) {
+		String extension = path.substring(path.lastIndexOf(".") + 1);
+
+		switch (extension) {
+
+			case "html":
+				return "text/html";
+
+			case "css":
+				return "text/css";
+
+			case "js":
+				return "text/javascript";
+
+			case "woff":
+				return "application/font-woff";
+
+			case "woff2":
+				return "application/font-woff2";
+
+			case "ttf":
+				return "application/x-font-ttf";
+		}
+
+		return "text/plain";
 	}
 
 }
