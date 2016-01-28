@@ -71,6 +71,8 @@ public class MockenizeService {
 			throw new ValidationException("Method cannot be null!");
 		} else if(mockBean.getUrl() == null) {
 			throw new ValidationException("URL cannot be null!");
+		} else if (!mockBean.getUrl().startsWith("/")) {
+			throw new ValidationException("URL must start with slash \"/\"!");
 		}
 	}
 
