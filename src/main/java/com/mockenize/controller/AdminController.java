@@ -49,11 +49,6 @@ public class AdminController {
 			.build();
 	}
 
-	@GET
-	public Map<String, MockBeanList> getAll() {
-		return mockenizeService.getAllMockBeans();
-	}
-
 	@DELETE
 	public ReturnBean delete(List<Map<String, String>> values) {
 		mockenizeService.delete(values);
