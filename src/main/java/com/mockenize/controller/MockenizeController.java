@@ -2,6 +2,7 @@ package com.mockenize.controller;
 
 import java.io.IOException;
 import java.util.Map.Entry;
+import java.util.Scanner;
 
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,6 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.google.common.io.CharStreams;
 import com.mockenize.exception.JSExecutionException;
 import com.mockenize.exception.ResourceNotFoundException;
 import com.mockenize.model.JSBean;
@@ -47,10 +47,10 @@ public class MockenizeController {
 			addHeaders(builder, mockBean);
 			String body = mockBean.getBody();
 			
-			if(mockBean.getJSName() != null && !mockBean.getJSName().isEmpty()) {
-				JSBean jsBean = jsService.getJSBean(mockBean.getJSName());
+			if(mockBean.getScriptName() != null && !mockBean.getScriptName().isEmpty()) {
+				JSBean jsBean = jsService.getJSBean(mockBean.getScriptName());
 				try {
-					body = jsService.execute(jsBean, request.getRequestURI(), CharStreams.toString(request.getReader()));
+					body = jsService.execute(jsBean, request.getRequestURI(), getBody(request));
 				} catch (NoSuchMethodException | ScriptException | IOException e) {
 					throw new JSExecutionException(e);
 				}
@@ -59,6 +59,12 @@ public class MockenizeController {
 			return builder.type(getContentType(mockBean)).entity(body).build();
 		}
 		throw new ResourceNotFoundException();
+	}
+	
+	private String getBody(HttpServletRequest request) throws IOException {
+		@SuppressWarnings("resource")
+		Scanner s = new Scanner(request.getInputStream()).useDelimiter("\\A");
+		return s.hasNext() ? s.next() : "";
 	}
 	
 
