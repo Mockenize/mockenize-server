@@ -1,7 +1,10 @@
 package com.mockenize.controller;
 
+import java.io.IOException;
 import java.util.Map.Entry;
+import java.util.Scanner;
 
+import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -18,8 +21,11 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.mockenize.exception.JSExecutionException;
 import com.mockenize.exception.ResourceNotFoundException;
+import com.mockenize.model.JSBean;
 import com.mockenize.model.MockBean;
+import com.mockenize.service.JSService;
 import com.mockenize.service.MockenizeService;
 
 @Path("/{regex:[^_].*}")
@@ -29,6 +35,9 @@ public class MockenizeController {
 
 	@Autowired
 	private MockenizeService mockenizeService;
+	
+	@Autowired
+	private JSService jsService;
 
 	@GET
 	public Response get(@Context HttpServletRequest request) {
@@ -36,10 +45,28 @@ public class MockenizeController {
 		if (mockBean != null) {
 			ResponseBuilder builder = Response.status(mockBean.getResponseCode());
 			addHeaders(builder, mockBean);
-			return builder.type(getContentType(mockBean)).entity(mockBean.getBody()).build();
+			String body = mockBean.getBody();
+			
+			if(mockBean.getScriptName() != null && !mockBean.getScriptName().isEmpty()) {
+				JSBean jsBean = jsService.getJSBean(mockBean.getScriptName());
+				try {
+					body = jsService.execute(jsBean, request.getRequestURI(), getBody(request));
+				} catch (NoSuchMethodException | ScriptException | IOException e) {
+					throw new JSExecutionException(e);
+				}
+			} 			
+			
+			return builder.type(getContentType(mockBean)).entity(body).build();
 		}
 		throw new ResourceNotFoundException();
 	}
+	
+	private String getBody(HttpServletRequest request) throws IOException {
+		@SuppressWarnings("resource")
+		Scanner s = new Scanner(request.getInputStream()).useDelimiter("\\A");
+		return s.hasNext() ? s.next() : "";
+	}
+	
 
 	private void addHeaders(ResponseBuilder builder, MockBean mockBean) {
 		if (!mockBean.getHeaders().isEmpty()) {

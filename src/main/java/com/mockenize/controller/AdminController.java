@@ -53,7 +53,7 @@ public class AdminController {
 	public Map<String, MockBeanList> getAll() {
 		return mockenizeService.getAllMockBeans();
 	}
-
+	
 	@DELETE
 	public ReturnBean delete(List<Map<String, String>> values) {
 		mockenizeService.delete(values);

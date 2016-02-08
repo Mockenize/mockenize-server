@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MockBean implements Serializable {
 
-	private static final long serialVersionUID = -3389671241241187207L;
+	private static final long serialVersionUID = 283478510603042500L;
 	private String body;
 	private Integer responseCode = 200;
 	private String url;
@@ -18,6 +18,7 @@ public class MockBean implements Serializable {
 	private int timeout = 0;
 	private int minTimeout = 0;
 	private int maxTimeout = 0;
+	private String scriptName;
 
 	public String getBody() {
 		return body;
@@ -81,6 +82,14 @@ public class MockBean implements Serializable {
 
 	public void setMaxTimeout(int maxTimeout) {
 		this.maxTimeout = maxTimeout;
+	}
+
+	public String getScriptName() {
+		return scriptName;
+	}
+
+	public void setScriptName(String scriptName) {
+		this.scriptName = scriptName;
 	}
 
 }
