@@ -35,6 +35,7 @@
 	<properties>
 		<java.version>1.7</java.version>
 		<guava.version>18.0</guava.version>
+		<jersey.multipart.version>2.22.1</jersey.multipart.version>
 	</properties>
 
 	<dependencies>
@@ -65,15 +66,14 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<artifactId>hazelcast</artifactId>
-			<groupId>com.hazelcast</groupId>
-			<version>3.4.5</version>
-		</dependency>
-		<dependency>
 			<artifactId>hazelcast-spring</artifactId>
 			<groupId>com.hazelcast</groupId>
-			<version>3.4.5</version>
 		</dependency>
+		 <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>${jersey.multipart.version}</version>
+        </dependency>
 	</dependencies>
 	<build>
 		<resources>
