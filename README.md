@@ -4,7 +4,7 @@ The complete app for mock your responses.
 Mockenize is an efficient server to mock, supports random responses, timeout and any media type. To store the responses, Mockenize uses Hazelcast and to run the standalone server uses Spring Boot.
 Mockenize is free and open source. Contribute if you want!
 
-[![Build Status](https://travis-ci.org/Mockenize/mockenize-server.svg?branch=master)](https://travis-ci.org/Mockenize/mockenize)
+[![Build Status](https://travis-ci.org/Mockenize/mockenize-server.svg?branch=master)](https://travis-ci.org/Mockenize/mockenize-server)
 # How to use
 
 - Running the server
