@@ -1,6 +1,7 @@
 package com.mockenize.controller;
 
 import java.util.Collection;
+import java.util.ResourceBundle;
 
 import javax.script.ScriptException;
 import javax.ws.rs.Consumes;
@@ -24,10 +25,13 @@ import com.mockenize.service.JSService;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Controller
-public class JSCrontroller {
+public class JSController {
 
 	@Autowired
 	private JSService jsService;
+	
+	@Autowired
+	private ResourceBundle bundle;
 
 	@GET
 	@Path("/name/{scriptName}")
@@ -45,21 +49,21 @@ public class JSCrontroller {
 	@Path("/{scriptName}")
 	public ReturnBean delete(@PathParam("scriptName") String scriptName) {
 		jsService.delete(new JSBean(scriptName, null));
-		return new ReturnBean("Successfully removed value!");
+		return new ReturnBean(bundle.getString("js.delete"));
 	}
 
 	@POST
 	@Path("/{scriptName}")
 	public ReturnBean insert(@PathParam("scriptName") String scriptName, String scriptValue) {
 		jsService.insert(new JSBean(scriptName, scriptValue));
-		return new ReturnBean("All values were successfully inserted!");
+		return new ReturnBean(bundle.getString("js.insert"));
 	}
 
 	@PUT
 	@Path("/{scriptName}")
 	public ReturnBean update(@PathParam("scriptName") String scriptName, String scriptValue) {
 		insert(scriptName, scriptValue);
-		return new ReturnBean("All values were successfully updated!");
+		return new ReturnBean(bundle.getString("js.update"));
 	}
 
 }

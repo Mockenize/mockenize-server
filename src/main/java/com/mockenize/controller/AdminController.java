@@ -6,17 +6,24 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
-import com.google.common.io.ByteStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.google.common.io.ByteStreams;
 import com.mockenize.model.MockBeanList;
 import com.mockenize.model.ReturnBean;
 import com.mockenize.service.MockenizeService;
@@ -29,6 +36,9 @@ public class AdminController {
 
 	@Autowired
 	private MockenizeService mockenizeService;
+	
+	@Autowired
+	private ResourceBundle bundle;
 
 	@GET
 	@Produces(MediaType.TEXT_HTML)
@@ -57,20 +67,20 @@ public class AdminController {
 	@DELETE
 	public ReturnBean delete(List<Map<String, String>> values) {
 		mockenizeService.delete(values);
-		return new ReturnBean("Successfully removed value!");
+		return new ReturnBean(bundle.getString("mock.delete"));
 	}
 
 	@DELETE
 	@Path("/clearAll")
 	public ReturnBean clearAll() {
 		mockenizeService.clearAll();
-		return new ReturnBean("All values were successfully removed!");
+		return new ReturnBean(bundle.getString("mock.delete.all"));
 	}
 
 	@POST
 	public ReturnBean insert(MockBeanList mockBeanList) {
 		mockenizeService.insert(mockBeanList);
-		return new ReturnBean("All values were successfully inserted!");
+		return new ReturnBean(bundle.getString("mock.insert"));
 	}
 
 	private String getContentType(@PathParam("path") String path) {
