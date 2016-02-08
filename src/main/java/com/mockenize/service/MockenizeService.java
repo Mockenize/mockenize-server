@@ -75,4 +75,8 @@ public class MockenizeService {
 			throw new ValidationException("URL must start with slash \"/\"!");
 		}
 	}
+
+	public Map<String, MockBeanList> getAllMockBeans() {
+		return hazelCastService.getAll();
+	}
 }

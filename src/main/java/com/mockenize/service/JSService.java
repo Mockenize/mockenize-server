@@ -22,7 +22,11 @@ public class JSService {
 	private HazelcastService<JSBean> hazelCastService;
 
 	public JSBean getJSBean(JSBean jsBean) {
-		jsBean = hazelCastService.get(jsBean.getName());
+		return getJSBean(jsBean.getName());
+	}
+	
+	public JSBean getJSBean(String jsName) {
+		JSBean jsBean = hazelCastService.get(jsName);
 		if(jsBean == null) {
 			throw new JSNotFoundException();
 		}
@@ -41,11 +45,11 @@ public class JSService {
 		return hazelCastService.getAll();
 	}
 	
-	public String execute(JSBean jsBean, String url, String body) throws ScriptException, NoSuchMethodException {
+	public String execute(JSBean jsBean, String uri, String body) throws ScriptException, NoSuchMethodException {
 		ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName(ENGINE_NAME);
 		scriptEngine.eval(jsBean.getValue());
 		Invocable invocable = (Invocable) scriptEngine;
-		return String.valueOf(invocable.invokeFunction(DEFAUL_FUNCTION_NAME, url, body));
+		return String.valueOf(invocable.invokeFunction(DEFAUL_FUNCTION_NAME, uri, body));
 	}
 
 }
