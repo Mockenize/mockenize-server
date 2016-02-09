@@ -1,86 +1,51 @@
 package com.mockenize.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRawValue;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.hazelcast.nio.ObjectDataInput;
+import com.hazelcast.nio.ObjectDataOutput;
+import com.hazelcast.nio.serialization.DataSerializable;
+import com.mockenize.vendor.jackson.PlainTextDeserializer;
+import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MockBean implements Serializable {
+public class MockBean {
 
 	private static final long serialVersionUID = -3389671241241187207L;
-	private String body;
-	private Integer responseCode = 200;
-	private String url;
+
+	@NotNull
+	private String key;
+
+	@NotNull
+	private String path;
+
+	@NotNull
 	private String method;
+
 	private Map<String, String> headers = Collections.emptyMap();
+
+	private JsonNode body;
+
+	@NotNull
+	private Integer responseCode = 200;
+
 	private int timeout = 0;
+
 	private int minTimeout = 0;
+
 	private int maxTimeout = 0;
-
-	public String getBody() {
-		return body;
-	}
-
-	public void setBody(String body) {
-		this.body = body;
-	}
-
-	public Integer getResponseCode() {
-		return responseCode;
-	}
-
-	public void setResponseCode(Integer responseCode) {
-		this.responseCode = responseCode;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getMethod() {
-		return method;
-	}
-
-	public void setMethod(String method) {
-		this.method = method;
-	}
-
-	public Map<String, String> getHeaders() {
-		return headers;
-	}
-
-	public void setHeaders(Map<String, String> headers) {
-		this.headers = headers;
-	}
-
-	public int getTimeout() {
-		return timeout;
-	}
-
-	public void setTimeout(int timeout) {
-		this.timeout = timeout;
-	}
-
-	public int getMinTimeout() {
-		return minTimeout;
-	}
-
-	public void setMinTimeout(int minTimeout) {
-		this.minTimeout = minTimeout;
-	}
-
-	public int getMaxTimeout() {
-		return maxTimeout;
-	}
-
-	public void setMaxTimeout(int maxTimeout) {
-		this.maxTimeout = maxTimeout;
-	}
-
 }

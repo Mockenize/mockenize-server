@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 
 	<name>Mockenize</name>
-	<description>The complete app for mock your responses</description>
+	<description>The complete app for mockBean your responses</description>
 
 	<scm>
 		<url>https://github.com/mauricioadlima/mockenize</url>
@@ -65,6 +65,11 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>2.22.1</version>
+		</dependency>
+		<dependency>
 			<artifactId>hazelcast</artifactId>
 			<groupId>com.hazelcast</groupId>
 			<version>3.4.5</version>
@@ -73,6 +78,11 @@
 			<artifactId>hazelcast-spring</artifactId>
 			<groupId>com.hazelcast</groupId>
 			<version>3.4.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.6</version>
 		</dependency>
 	</dependencies>
 	<build>

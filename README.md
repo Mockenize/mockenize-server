@@ -1,7 +1,7 @@
 # Mockenize
-The complete app for mock your responses.
+The complete app for mockBean your responses.
 
-Mockenize is an efficient server to mock, supports random responses, timeout and any media type. To store the responses, Mockenize uses Hazelcast and to run the standalone server uses Spring Boot.
+Mockenize is an efficient server to mockBean, supports random responses, timeout and any media type. To store the responses, Mockenize uses Hazelcast and to run the standalone server uses Spring Boot.
 Mockenize is free and open source. Contribute if you want!
 
 [![Build Status](https://travis-ci.org/Mockenize/mockenize.svg?branch=master)](https://travis-ci.org/Mockenize/mockenize)
@@ -12,7 +12,7 @@ Mockenize is free and open source. Contribute if you want!
 java -jar mockenize-x.x.x.jar --server.port=8090 (default port is 8080)
 ```
 
-- Adding basic responses mocks
+- Adding basic responses mockBeen
 
 ```json
 POST http://localhost:8080/_mockenize
@@ -27,7 +27,7 @@ POST http://localhost:8080/_mockenize
 }
 ```
 
-- Adding multiple responses mocks. The responses will return at random.
+- Adding multiple responses mockBeen. The responses will return at random.
 
 ```json
 POST http://localhost:8080/_mockenize
@@ -86,13 +86,13 @@ POST http://localhost:8080/_mockenize
 }
 ```
 
-- Clearing all responses mocks
+- Clearing all responses mockBeen
 
 ```json
 DELETE http://localhost:8080/_mockenize/clearAll
 ```
 
-- Clearing unique or multiple response mock
+- Clearing unique or multiple response mockBean
 
 ```json
 DELETE http://localhost:8080/_mockenize
@@ -107,7 +107,7 @@ DELETE http://localhost:8080/_mockenize
 ]
 ```
 
-- Use the admin to easily create your mocks.
+- Use the admin to easily create your mockBeen.
 
 ```json
 http://localhost:8080/_mockenize/index.html
