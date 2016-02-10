@@ -36,10 +36,9 @@ public class FileController {
 
 	@Autowired
 	private FileService fileService;
-	
+
 	@Autowired
 	private MockenizeService mockenizeService;
-
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
