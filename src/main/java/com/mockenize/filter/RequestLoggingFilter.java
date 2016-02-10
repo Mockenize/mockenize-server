@@ -73,9 +73,9 @@ public class RequestLoggingFilter implements ContainerRequestFilter {
     private LogType getRequestType(UriInfo uriInfo) {
         String path = uriInfo.getRequestUri().getPath();
 
-        if (path.startsWith("/mock")) {
+        if (path.startsWith("/api/mock")) {
             return LogType.MOCK;
-        } else if (path.startsWith("/proxy")) {
+        } else if (path.startsWith("/api/proxy")) {
             return LogType.PROXY;
         }
 

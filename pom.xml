@@ -11,10 +11,9 @@
 	<description>The complete app for mockBean your responses</description>
 
 	<scm>
-		<url>https://github.com/mauricioadlima/mockenize</url>
-		<connection>scm:git:git://github.com:mauricioadlima/mockenize.git</connection>
-		<developerConnection>scm:git:git@github.com:mauricioadlima/mockenize.git</developerConnection>
-		<tag>mockenize-0.0.4</tag>
+		<url>https://github.com/Mockenize/mockenize-server</url>
+		<connection>scm:git:git@github.com:Mockenize/mockenize-server.git</connection>
+		<developerConnection>scm:git:git@github.com:Mockenize/mockenize-server.git</developerConnection>
 	</scm>
 
 	<distributionManagement>
@@ -35,9 +34,19 @@
 	<properties>
 		<java.version>1.7</java.version>
 		<guava.version>18.0</guava.version>
+		<mockenize-client.version>0.0.1-SNAPSHOT</mockenize-client.version>
+		<jersey-client.version>2.22.1</jersey-client.version>
+		<hazelcast.version>3.4.5</hazelcast.version>
+		<lombok.version>1.16.6</lombok.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.mockenize</groupId>
+			<artifactId>mockenize-client</artifactId>
+			<version>${mockenize-client.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -50,6 +59,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -67,37 +80,26 @@
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>2.22.1</version>
+			<version>${jersey-client.version}</version>
 		</dependency>
 		<dependency>
 			<artifactId>hazelcast</artifactId>
 			<groupId>com.hazelcast</groupId>
-			<version>3.4.5</version>
+			<version>${hazelcast.version}</version>
 		</dependency>
 		<dependency>
 			<artifactId>hazelcast-spring</artifactId>
 			<groupId>com.hazelcast</groupId>
-			<version>3.4.5</version>
+			<version>${hazelcast.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.6</version>
+			<version>${lombok.version}</version>
 		</dependency>
 	</dependencies>
+
 	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-
-			<resource>
-				<directory>src/main/webapp</directory>
-				<targetPath>webapp</targetPath>
-				<filtering>false</filtering>
-			</resource>
-		</resources>
-
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

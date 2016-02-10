@@ -28,4 +28,13 @@ public class LoggingService {
     public LogBean getByKey(UUID key) {
         return logRepository.findByKey(key);
     }
+
+
+    public void delete(UUID key) {
+        logRepository.delete(key);
+    }
+
+    public void deleteAll() {
+        logRepository.deleteAll();
+    }
 }

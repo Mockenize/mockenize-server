@@ -4,6 +4,7 @@ import com.mockenize.model.LogType;
 import com.mockenize.model.ProxyBean;
 import com.mockenize.service.LoggingService;
 import com.mockenize.service.ProxyService;
+import org.glassfish.jersey.client.ClientResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -22,7 +23,7 @@ import javax.ws.rs.core.Response;
  * Created by rwatanabe on 08/02/16.
  */
 @Controller
-@Path("/proxy/{name:[\\w-_]+}/{target:.*}")
+@Path("/proxy/{name:[^/]+}{target:.*}")
 @Consumes(value = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN })
 @Produces(value = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN })
 public class ProxyController {
@@ -46,8 +47,10 @@ public class ProxyController {
 
     @GET
     public Response get() {
-        Response response = requestBuilder().get();
-        return response;
+        Response clientResponse = requestBuilder().get();
+        clientResponse.bufferEntity();
+
+        return Response.status(clientResponse.getStatus()).entity(clientResponse.getEntity()).build();
     }
 
     @POST

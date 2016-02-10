@@ -1,4 +1,4 @@
-package com.mockenize.filter;
+package com.mockenize.provider;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;

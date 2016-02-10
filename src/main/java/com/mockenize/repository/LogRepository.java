@@ -15,7 +15,7 @@ import java.util.UUID;
 @Repository
 public class LogRepository {
 
-    private final String CACHE_KEY = "request-logs";
+    private final String CACHE_KEY = "logs";
 
     private final IMap<UUID, LogBean> map;
 
@@ -36,5 +36,13 @@ public class LogRepository {
 
     public LogBean findByKey(UUID key) {
         return map.get(key);
+    }
+
+    public void delete(UUID key) {
+        map.remove(key);
+    }
+
+    public void deleteAll() {
+        map.clear();
     }
 }

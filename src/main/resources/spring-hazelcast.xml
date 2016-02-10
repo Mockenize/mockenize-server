@@ -20,9 +20,7 @@
                 </hz:join>
             </hz:network>
 
-            <hz:map name="map" backup-count="2" max-size="0"
-                    eviction-percentage="30" read-backup-data="true" eviction-policy="NONE"
-                    merge-policy="com.hazelcast.map.merge.PassThroughMergePolicy"/>
+            <hz:map name="logs" max-size="500" time-to-live-seconds="1800" eviction-policy="LFU"/>
 
             <hz:serialization>
                 <hz:serializers>
