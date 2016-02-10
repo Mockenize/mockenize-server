@@ -42,7 +42,9 @@ public class FileService {
 	
 	public void loadFile(InputStream inputStream) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		MockBeanList beanList = mapper.readValue(inputStream, MockBeanList.class);
-		mockenizeService.insert(beanList);
+		MockBeanList[] list = mapper.readValue(inputStream, MockBeanList[].class);
+		for (MockBeanList beanList : list) {
+			mockenizeService.insert(beanList);
+		}
 	}
 }
