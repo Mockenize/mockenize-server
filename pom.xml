@@ -83,13 +83,8 @@
 			<version>${jersey-client.version}</version>
 		</dependency>
 		<dependency>
-			<artifactId>hazelcast</artifactId>
 			<groupId>com.hazelcast</groupId>
-			<version>${hazelcast.version}</version>
-		</dependency>
-		<dependency>
 			<artifactId>hazelcast-spring</artifactId>
-			<groupId>com.hazelcast</groupId>
 			<version>${hazelcast.version}</version>
 		</dependency>
 		<dependency>

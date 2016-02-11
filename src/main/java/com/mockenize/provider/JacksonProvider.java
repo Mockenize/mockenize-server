@@ -1,5 +1,6 @@
 package com.mockenize.provider;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,14 @@ public class JacksonProvider implements ContextResolver<ObjectMapper> {
     @Autowired
     public JacksonProvider(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+        configure();
+    }
+
+    private void configure() {
+        objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, true);
+        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
 

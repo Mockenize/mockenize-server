@@ -1,4 +1,4 @@
-package com.mockenize.vendor.hazelcast;
+package com.mockenize.vendor.hazelcast.serializer;
 
 import com.mockenize.model.LogBean;
 import org.springframework.stereotype.Component;

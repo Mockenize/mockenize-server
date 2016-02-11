@@ -14,6 +14,7 @@ public class ExceptionMapper implements javax.ws.rs.ext.ExceptionMapper<Throwabl
 
 	@Override
 	public Response toResponse(Throwable throwable) {
+		throwable.printStackTrace();
 		int status = HttpStatus.INTERNAL_SERVER_ERROR_500;
 		if (throwable instanceof WebApplicationException) {
 			status = ((WebApplicationException) throwable).getResponse().getStatus();

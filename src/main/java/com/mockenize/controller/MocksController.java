@@ -1,6 +1,7 @@
 package com.mockenize.controller;
 
 import com.mockenize.model.MockBean;
+import com.mockenize.model.MultipleMockBean;
 import com.mockenize.service.MockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,24 +9,25 @@ import org.springframework.stereotype.Controller;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Collection;
 
 @Controller
-@Path("/manage/mocks")
+@Path("/_mocks")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class ManageMocksController {
+public class MocksController {
 
 	@Autowired
 	private MockService mockService;
 
 	@GET
 	public Response getAll() {
-		Iterable<MockBean> mocks = mockService.getAll();
+		Collection<MultipleMockBean> mocks = mockService.getAll();
 		return Response.ok(mocks).build();
 	}
 
 	@POST
-	public Response create(MockBean mockBean) {
+	public Response create(MultipleMockBean mockBean) {
 		MockBean createdMockBean = mockService.save(mockBean);
 		return Response.status(Response.Status.CREATED).entity(createdMockBean).build();
 	}
@@ -38,7 +40,7 @@ public class ManageMocksController {
 
 	@PUT
 	@Path("/{key}")
-	public Response update(@PathParam("key") String key, MockBean mockBean) {
+	public Response update(@PathParam("key") String key, MultipleMockBean mockBean) {
 		mockBean.setKey(key);
 		mockService.save(mockBean);
 		return Response.noContent().build();

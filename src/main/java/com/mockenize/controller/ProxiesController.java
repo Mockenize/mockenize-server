@@ -13,10 +13,10 @@ import javax.ws.rs.core.Response;
  * Created by rwatanabe on 08/02/16.
  */
 @Controller
-@Path("/manage/proxies")
+@Path("/_proxies")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ManageProxiesController {
+public class ProxiesController {
 
     @Autowired
     private ProxyService proxyService;

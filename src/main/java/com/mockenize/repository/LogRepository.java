@@ -15,13 +15,13 @@ import java.util.UUID;
 @Repository
 public class LogRepository {
 
-    private final String CACHE_KEY = "logs";
+    private static final String CACHE_KEY = "logs";
 
     private final IMap<UUID, LogBean> map;
 
     @Autowired
     public LogRepository(HazelcastInstance hazelcastInstance) {
-        map = hazelcastInstance.getMap(CACHE_KEY);
+        this.map = hazelcastInstance.getMap(CACHE_KEY);
         map.addIndex("key", false);
         map.addIndex("date", true);
     }

@@ -28,7 +28,7 @@ public class TextPlainMessageBodyWriter implements MessageBodyWriter<JsonNode> {
 
     @Override
     public long getSize(JsonNode jsonNode, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-        return jsonNode.toString().length();
+        return jsonNode.asText().length();
     }
 
     @Override

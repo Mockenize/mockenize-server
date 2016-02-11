@@ -6,24 +6,36 @@ import com.mockenize.repository.ProxyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import java.util.Collection;
-import java.util.UUID;
+import java.util.Enumeration;
 
 /**
  * Created by rwatanabe on 08/02/16.
  */
 @Service
-public class ProxyService {
+public class ProxyService implements ResponseService {
 
     @Autowired
     private ProxyRepository proxyRepository;
+
+    @Context
+    private HttpServletRequest request;
+
+    private Client client = ClientBuilder.newClient();
 
     public Collection<ProxyBean> getAll() {
         return proxyRepository.findAll();
     }
 
     public ProxyBean save(ProxyBean proxyBean) {
-        proxyBean.setKey(toKey(proxyBean.getName()));
+        proxyBean.setKey(toKey(proxyBean.getPath()));
         return proxyRepository.save(proxyBean);
     }
 
@@ -45,7 +57,22 @@ public class ProxyService {
         proxyRepository.deleteAll();
     }
 
-    private String toKey(String name) {
-        return name.toLowerCase().replaceAll("\\s+", "-");
+    @Override
+    public Response getResponse(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        ProxyBean proxyBean = proxyRepository.findByPath(path);
+        Builder requestBuilder = client.target(proxyBean.getUrl()).path(path).request();
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = headerNames.nextElement();
+            requestBuilder.header(key, request.getHeader(key));
+        }
+        Response response = requestBuilder.method(request.getMethod());
+        response.bufferEntity();
+        return response;
+    }
+
+    private String toKey(String path) {
+        return path.toLowerCase().replaceAll("/", "_");
     }
 }

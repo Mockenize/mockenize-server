@@ -8,7 +8,6 @@ import com.mockenize.filter.ResponseLoggingFilter;
 import com.mockenize.provider.JacksonProvider;
 import com.mockenize.provider.TextPlainMessageBodyWriter;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,10 +26,10 @@ public class JerseyConfig extends ResourceConfig {
     }
 
     private void registerControllers() {
-        register(MockController.class);
-        register(ManageMocksController.class);
-        register(ProxyController.class);
-        register(ManageProxiesController.class);
+        register(ScriptsController.class);
+        register(MockenizeController.class);
+        register(MocksController.class);
+        register(ProxiesController.class);
         register(LogController.class);
     }
 

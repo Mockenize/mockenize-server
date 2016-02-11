@@ -6,3 +6,4 @@
 
  :: ${application.title} - ${application.version}
  :: https://github.com/Mockenize/mockenize-server
+ :: developed by Mauricio Lima & Rodrigo Watanabe
