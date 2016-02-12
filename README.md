@@ -5,6 +5,7 @@ Mockenize is an efficient server to mockBean, supports random responses, timeout
 Mockenize is free and open source. Contribute if you want!
 
 [![Build Status](https://travis-ci.org/Mockenize/mockenize-server.svg?branch=master)](https://travis-ci.org/Mockenize/mockenize-server)
+[ ![Download](https://api.bintray.com/packages/mockenize/mockenize/mockenize-server/images/download.svg) ](https://bintray.com/mockenize/mockenize/mockenize-server/_latestVersion)
 # How to use
 
 - Running the server
