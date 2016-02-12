@@ -1,5 +1,4 @@
 jdk:
   - oraclejdk8
   
-script: 
-  - mvn deploy --settings .travis/maven-settings.xml
+script: .travis/build.sh
