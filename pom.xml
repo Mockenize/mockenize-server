@@ -42,7 +42,6 @@
         <guava.version>18.0</guava.version>
         <mockenize-client.version>0.0.1</mockenize-client.version>
         <jersey-client.version>2.22.1</jersey-client.version>
-        <hazelcast.version>3.4.5</hazelcast.version>
         <lombok.version>1.16.6</lombok.version>
         <spring-boot.version>1.3.2.RELEASE</spring-boot.version>
     </properties>
@@ -98,7 +97,6 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast-spring</artifactId>
-            <version>${hazelcast.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
