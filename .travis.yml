@@ -1,2 +1,2 @@
 language: java
-script: "mvn deploy --settings .travis/settings.xml"
+script: mvn deploy --settings .travis/maven-settings.xml
