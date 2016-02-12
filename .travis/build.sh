@@ -3,7 +3,7 @@
 VERSION=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml)
 echo "Detected version: $VERSION"
 
-if [[ $VERSION == *"SNAPSHOT"* ]]; then
+if [ $VERSION=~*SNAPSHOT* ]; then
 	echo "Building SNAPSHOT"
 	mvn compile test
 else
