@@ -1,4 +1,4 @@
 jdk:
   - oraclejdk8
   
-script: .travis/build.sh
+script: sh .travis/build.sh
