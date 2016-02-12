@@ -24,8 +24,8 @@
 
             <hz:serialization>
                 <hz:serializers>
-                    <hz:serializer type-class="com.mockenize.model.LogBean" implementation="logBeanSerializer"/>
-                    <hz:serializer type-class="com.mockenize.model.MockBean" implementation="mockBeanSerializer"/>
+                    <hz:serializer type-class="org.mockenize.model.LogBean" implementation="logBeanSerializer"/>
+                    <hz:serializer type-class="org.mockenize.model.MockBean" implementation="mockBeanSerializer"/>
                 </hz:serializers>
             </hz:serialization>
         </hz:config>

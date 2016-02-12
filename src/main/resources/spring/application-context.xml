@@ -6,7 +6,7 @@
              http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.mockenize.service" />
+	<context:component-scan base-package="org.mockenize.service" />
 	<import resource="spring-hazelcast.xml" />
 
 	<bean id="i18n" class="java.util.ResourceBundle" factory-method="getBundle">
