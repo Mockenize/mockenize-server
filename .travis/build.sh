@@ -5,8 +5,8 @@ echo "Detected version: $VERSION"
 
 if [ $VERSION=~*SNAPSHOT* ]; then
 	echo "Building SNAPSHOT"
-	mvn compile test
+	mvn clean test --settings .travis/maven-settings.xml
 else
 	echo "Building RELEASE"
-	mvn deploy --settings .travis/maven-settings.xml
+	mvn clean deploy --settings .travis/maven-settings.xml
 fi
