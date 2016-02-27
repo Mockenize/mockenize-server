@@ -1,5 +1,5 @@
 # Mockenize
-The complete app for mockBean your responses.
+REST API Testing Toolkit
 
 Mockenize is an efficient server to mockBean, supports random responses, timeout and any media type. To store the responses, Mockenize uses Hazelcast and to run the standalone server uses Spring Boot.
 Mockenize is free and open source. Contribute if you want!
