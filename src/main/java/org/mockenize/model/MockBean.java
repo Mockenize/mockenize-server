@@ -33,4 +33,9 @@ public class MockBean {
 	private int maxTimeout = 0;
 
 	private String scriptName;
+
+	public String getKey() {
+		return method.concat(path.replaceAll("/", "_"));
+	}
+
 }

@@ -64,12 +64,13 @@ public class MockService implements ResponseService {
 	}
 
 	public MultipleMockBean save(MultipleMockBean mockBean) {
-		mockBean.setKey(toKey(mockBean));
 		return mockRepository.save(mockBean);
 	}
 
-	public void delete(String key) {
-		mockRepository.delete(key);
+	public void delete(Collection<MockBean> mockBeans) {
+		for(MockBean bean : mockBeans) {
+			mockRepository.delete(bean.getKey());
+		}
 	}
 
 	public void deleteAll() {
@@ -108,10 +109,6 @@ public class MockService implements ResponseService {
 
 	private String toKey(String method, String path) {
 		return method.concat(path.replaceAll("/", "_"));
-	}
-
-	private String toKey(MockBean mockBean) {
-		return toKey(mockBean.getMethod(), mockBean.getPath());
 	}
 
 	private void sleep(MockBean mockBean) {

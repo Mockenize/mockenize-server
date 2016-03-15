@@ -1,15 +1,23 @@
 package org.mockenize.controller;
 
+import java.util.Collection;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.mockenize.model.MockBean;
 import org.mockenize.model.MultipleMockBean;
 import org.mockenize.service.MockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.Collection;
 
 @Controller
 @Path("/_mocks")
@@ -33,6 +41,7 @@ public class MocksController {
 	}
 
 	@DELETE
+	@Path("/all")
 	public Response deleteAll() {
 		mockService.deleteAll();
 		return Response.noContent().build();
@@ -40,10 +49,8 @@ public class MocksController {
 
 	@PUT
 	@Path("/{key}")
-	public Response update(@PathParam("key") String key, MultipleMockBean mockBean) {
-		mockBean.setKey(key);
-		mockService.save(mockBean);
-		return Response.noContent().build();
+	public Response update(MultipleMockBean mockBean) {
+		return create(mockBean);
 	}
 
 	@GET
@@ -54,9 +61,8 @@ public class MocksController {
 	}
 
 	@DELETE
-	@Path("/{key}")
-	public Response delete(@PathParam("key") String key) {
-		mockService.delete(key);
+	public Response delete(Collection<MockBean> mockBeans) {
+		mockService.delete(mockBeans);
 		return Response.noContent().build();
 	}
 }

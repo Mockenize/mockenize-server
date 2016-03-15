@@ -53,10 +53,13 @@ public class ResponseLoggingFilter implements ContainerResponseFilter {
     private void processResponse(ContainerResponseContext responseContext) throws IOException {
         UUID key = getRequestId();
         LogBean logBean = loggingService.getByKey(key);
-        responseContext.getHeaders().put(KEY, Lists.<Object>newArrayList(key));
-        logBean.setResponse(mapResponseLogBean(responseContext));
-        loggingService.save(logBean);
-        MDC.remove(KEY);
+        //TODO validar prq a key vem null ou as vezes vem diferente
+        if (logBean != null) {
+			responseContext.getHeaders().put(KEY, Lists.<Object> newArrayList(key));
+			logBean.setResponse(mapResponseLogBean(responseContext));
+			loggingService.save(logBean);
+			MDC.remove(KEY);
+		}
     }
 
     private ResponseLogBean mapResponseLogBean(ContainerResponseContext responseContext) throws IOException {
