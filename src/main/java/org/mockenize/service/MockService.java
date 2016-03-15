@@ -1,7 +1,19 @@
 package org.mockenize.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.google.common.base.Strings;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+import javax.script.ScriptException;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+
 import org.mockenize.exception.ScriptExecutionException;
 import org.mockenize.model.MockBean;
 import org.mockenize.model.MultipleMockBean;
@@ -10,19 +22,8 @@ import org.mockenize.repository.MockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.script.ScriptException;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Validator;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.common.base.Strings;
 
 @Service
 public class MockService implements ResponseService {
@@ -32,8 +33,6 @@ public class MockService implements ResponseService {
 
 	@Autowired
 	private ScriptService scriptService;
-
-	private Validator validator;
 
 	private Random random = new Random();
 

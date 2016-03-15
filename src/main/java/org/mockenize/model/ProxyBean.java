@@ -13,7 +13,9 @@ import java.net.URI;
 @Data
 public class ProxyBean implements Serializable {
 
-    @NotEmpty
+	private static final long serialVersionUID = 1L;
+
+	@NotEmpty
     private String key;
 
     @NotEmpty

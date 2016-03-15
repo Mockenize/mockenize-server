@@ -1,15 +1,16 @@
 package org.mockenize.vendor.hazelcast.predicate;
 
-import com.hazelcast.query.Predicate;
-
 import java.util.Map;
+
+import com.hazelcast.query.Predicate;
 
 /**
  * Created by rwatanabe on 10/02/16.
  */
 public class PathPredicate implements Predicate<String, Object> {
 
-    private final String value;
+	private static final long serialVersionUID = 4605050326503577349L;
+	private final String value;
 
     public PathPredicate(String value) {
         this.value = value.replaceAll("/", "_");

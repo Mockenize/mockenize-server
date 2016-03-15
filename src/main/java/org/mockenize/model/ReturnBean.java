@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 public class ReturnBean implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private String message;
 
 	@JsonInclude(Include.NON_NULL)

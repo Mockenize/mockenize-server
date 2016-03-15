@@ -12,7 +12,9 @@ import java.util.UUID;
 @Data
 public class LogBean implements Serializable {
 
-    private UUID key;
+	private static final long serialVersionUID = 1L;
+
+	private UUID key;
 
     private LogType type;
 
