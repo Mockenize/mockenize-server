@@ -56,6 +56,8 @@ public class ScriptService {
         scriptEngine.eval(scriptBean.getValue());
         Invocable invocable = (Invocable) scriptEngine;
         String result = String.valueOf(invocable.invokeFunction(DEFAUL_FUNCTION_NAME, uri, body));
+        
+        //TODO jsonNode pode ser uma string comum ao inves de um JSON????? 
         return objectMapper.readTree(result);
     }
 

@@ -48,7 +48,6 @@ public class MocksController {
 	}
 
 	@PUT
-	@Path("/{key}")
 	public Response update(MultipleMockBean mockBean) {
 		return create(mockBean);
 	}

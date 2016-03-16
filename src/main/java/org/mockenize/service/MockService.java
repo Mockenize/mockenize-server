@@ -28,6 +28,8 @@ import com.google.common.base.Strings;
 @Service
 public class MockService implements ResponseService {
 
+	private static final String EMPTY = "";
+
 	@Autowired
 	private MockRepository mockRepository;
 
@@ -98,7 +100,7 @@ public class MockService implements ResponseService {
 		if(!Strings.isNullOrEmpty(mockBean.getScriptName())) {
 			ScriptBean scriptBean = scriptService.getByKey(mockBean.getScriptName());
 			try {
-				return scriptService.execute(scriptBean, path, body.asText());
+				return scriptService.execute(scriptBean, path, body != null ? body.asText() : EMPTY);
 			} catch (NoSuchMethodException | ScriptException | IOException e) {
 				throw new ScriptExecutionException(e);
 			}
