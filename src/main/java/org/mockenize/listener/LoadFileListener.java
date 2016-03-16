@@ -1,14 +1,13 @@
-package com.mockenize.listener;
+package org.mockenize.listener;
 
 import java.io.File;
 
+import org.mockenize.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-
-import com.mockenize.service.FileService;
 
 @Component
 public class LoadFileListener implements ApplicationListener<ContextRefreshedEvent> {

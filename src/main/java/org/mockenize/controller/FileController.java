@@ -1,4 +1,4 @@
-package com.mockenize.controller;
+package org.mockenize.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,15 +17,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.StreamingOutput;
 
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.mockenize.model.ReturnBean;
+import org.mockenize.service.FileService;
+import org.mockenize.service.MockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mockenize.model.ReturnBean;
-import com.mockenize.service.FileService;
-import com.mockenize.service.MockenizeService;
 
 @Path("/_mockenize/file")
 @Controller
@@ -38,7 +38,7 @@ public class FileController {
 	private FileService fileService;
 
 	@Autowired
-	private MockenizeService mockenizeService;
+	private MockService mockService;
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -58,7 +58,7 @@ public class FileController {
 			@Override
 			public void write(OutputStream output) throws IOException, WebApplicationException {
 				ObjectMapper mapper = new ObjectMapper();
-				mapper.writeValue(output, mockenizeService.getAllMockBeans().values());
+				mapper.writeValue(output, mockService.getAll());
 			}
 		};
 	}
