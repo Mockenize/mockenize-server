@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 @Controller
 @Path("{path:[^_].+}")
 @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
-@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
+@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN, MediaType.TEXT_HTML})
 public class MockenizeController {
 
     @Autowired
@@ -42,8 +42,8 @@ public class MockenizeController {
     }
 
     @DELETE
-    public Response delete() {
-        return mockenizeService.getResponse(request);
+    public Response delete(JsonNode body) {
+        return mockenizeService.getResponse(request, body);
     }
 
     @HEAD
@@ -52,7 +52,7 @@ public class MockenizeController {
     }
 
     @OPTIONS
-    public Response options() {
-        return mockenizeService.getResponse(request);
+    public Response options(JsonNode body) {
+        return mockenizeService.getResponse(request, body);
     }
 }

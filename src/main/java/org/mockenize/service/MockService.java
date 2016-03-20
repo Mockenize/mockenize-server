@@ -28,7 +28,7 @@ import com.google.common.base.Strings;
 @Service
 public class MockService implements ResponseService {
 
-	private static final String EMPTY = "";
+	private static final int FIRST = 0;
 
 	@Autowired
 	private MockRepository mockRepository;
@@ -38,10 +38,8 @@ public class MockService implements ResponseService {
 
 	private Random random = new Random();
 
-	private static final int FIRST = 0;
-
 	public MultipleMockBean getByKey(String key) {
-		return  mockRepository.findByKey(key);
+		return mockRepository.findByKey(key);
 	}
 
 	public MockBean getByMethodAndPath(String method, String path) {
@@ -70,7 +68,7 @@ public class MockService implements ResponseService {
 	}
 
 	public void delete(Collection<MockBean> mockBeans) {
-		for(MockBean bean : mockBeans) {
+		for (MockBean bean : mockBeans) {
 			mockRepository.delete(bean.getKey());
 		}
 	}
@@ -88,7 +86,7 @@ public class MockService implements ResponseService {
 		MockBean mockBean = getByMethodAndPath(request.getMethod(), request.getRequestURI());
 		Map<String, String> headers = mockBean.getHeaders();
 		final ResponseBuilder responseBuilder = Response.status(mockBean.getStatus());
-		for(Entry<String, String> entry : headers.entrySet()) {
+		for (Entry<String, String> entry : headers.entrySet()) {
 			responseBuilder.header(entry.getKey(), entry.getValue());
 		}
 		String contentType = headers.getOrDefault(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN);
@@ -97,10 +95,10 @@ public class MockService implements ResponseService {
 	}
 
 	private JsonNode getResponseBody(MockBean mockBean, String path, JsonNode body) {
-		if(!Strings.isNullOrEmpty(mockBean.getScriptName())) {
+		if (!Strings.isNullOrEmpty(mockBean.getScriptName())) {
 			ScriptBean scriptBean = scriptService.getByKey(mockBean.getScriptName());
 			try {
-				return scriptService.execute(scriptBean, path, body != null ? body.asText() : EMPTY);
+				return scriptService.execute(scriptBean, path, body);
 			} catch (NoSuchMethodException | ScriptException | IOException e) {
 				throw new ScriptExecutionException(e);
 			}

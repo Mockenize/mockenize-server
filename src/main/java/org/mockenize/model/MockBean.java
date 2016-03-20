@@ -10,6 +10,10 @@ import java.util.Map;
 @Data
 public class MockBean {
 
+	private static final String _ = "_";
+
+	private static final String SLASH = "/";
+
 	@NotNull
 	private String key;
 
@@ -35,7 +39,14 @@ public class MockBean {
 	private String scriptName;
 
 	public String getKey() {
-		return method.concat(path.replaceAll("/", "_"));
+		return method.concat(path.replaceAll(SLASH, _));
+	}
+	
+	public void setPath(String path) {
+		if(path != null && !path.startsWith(SLASH)) {
+			path = SLASH + path;
+		}
+		this.path = path;
 	}
 
 }

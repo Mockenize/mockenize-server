@@ -1,67 +1,78 @@
 package org.mockenize.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Set;
+
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import org.mockenize.exception.ScriptNotFoundException;
 import org.mockenize.model.ScriptBean;
 import org.mockenize.repository.ScriptRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Set;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class ScriptService {
 
-    private static final String ENGINE_NAME = "JavaScript";
+	private static final String ENGINE_NAME = "JavaScript";
 
-    private static final String DEFAUL_FUNCTION_NAME = "func";
+	private static final String DEFAUL_FUNCTION_NAME = "_func";
 
-    @Autowired
-    private ObjectMapper objectMapper;
+	private static final String PARSE_FUNCTION = ""
+			+ "function _func(url, body) {"
+			+ "try{obj=JSON.parse(body)}catch(ex){};"
+			+ "ret = func(url, body, obj);"
+			+ "try{return (typeof ret === 'string') ? ret : JSON.stringify(ret)}catch(ex){};"
+			+ "return ret};";
 
-    @Autowired
-    private ScriptRespository scriptRespository;
+	private static final String EMPTY = "";
 
-    public ScriptBean getByKey(String jsName) {
-        ScriptBean scriptBean = scriptRespository.findByKey(jsName);
+	@Autowired
+	private ObjectMapper objectMapper;
 
-        if (scriptBean == null) {
-            throw new ScriptNotFoundException();
-        }
+	@Autowired
+	private ScriptRespository scriptRespository;
 
-        return scriptBean;
-    }
+	public ScriptBean getByKey(String jsName) {
+		ScriptBean scriptBean = scriptRespository.findByKey(jsName);
 
-    public void delete(ScriptBean scriptBean) {
-        scriptRespository.delete(scriptBean.getName());
-    }
+		if (scriptBean == null) {
+			throw new ScriptNotFoundException();
+		}
 
-    public void save(ScriptBean scriptBean) {
-        scriptRespository.save(scriptBean);
-    }
+		return scriptBean;
+	}
 
-    public Collection<ScriptBean> getAll() {
-        return scriptRespository.findAll();
-    }
+	public void delete(ScriptBean scriptBean) {
+		scriptRespository.delete(scriptBean.getName());
+	}
 
-    public JsonNode execute(ScriptBean scriptBean, String uri, String body) throws ScriptException, NoSuchMethodException, IOException {
-        ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName(ENGINE_NAME);
-        scriptEngine.eval(scriptBean.getValue());
-        Invocable invocable = (Invocable) scriptEngine;
-        String result = String.valueOf(invocable.invokeFunction(DEFAUL_FUNCTION_NAME, uri, body));
-        
-        //TODO jsonNode pode ser uma string comum ao inves de um JSON????? 
-        return objectMapper.readTree(result);
-    }
+	public void save(ScriptBean scriptBean) {
+		scriptRespository.save(scriptBean);
+	}
 
-    public Set<String> getAllKeys() {
-        return scriptRespository.findAllKeys();
-    }
+	public Collection<ScriptBean> getAll() {
+		return scriptRespository.findAll();
+	}
+
+	public JsonNode execute(ScriptBean scriptBean, String uri, JsonNode body)
+			throws ScriptException, NoSuchMethodException, IOException {
+		ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName(ENGINE_NAME);
+		scriptEngine.eval(PARSE_FUNCTION + scriptBean.getValue());
+		Invocable invocable = (Invocable) scriptEngine;
+		String stringBody = body != null ? body.toString() : EMPTY;
+		return objectMapper.createObjectNode()
+				.textNode(String.valueOf(invocable.invokeFunction(DEFAUL_FUNCTION_NAME, uri, stringBody)));
+	}
+
+	public Set<String> getAllKeys() {
+		return scriptRespository.findAllKeys();
+	}
 }
