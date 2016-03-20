@@ -19,7 +19,7 @@ import org.mockenize.service.ScriptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-@Path("/_scripts")
+@Path("/_mockenize/scripts")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Controller

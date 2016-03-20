@@ -15,7 +15,7 @@ import java.util.UUID;
  * Created by rwatanabe on 08/02/16.
  */
 @Controller
-@Path("/_logs")
+@Path("/_mockenize/logs")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class LogController {

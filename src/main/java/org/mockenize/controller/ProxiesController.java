@@ -20,7 +20,7 @@ import org.springframework.stereotype.Controller;
  * Created by rwatanabe on 08/02/16.
  */
 @Controller
-@Path("/_proxies")
+@Path("/_mockenize/proxies")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProxiesController {
