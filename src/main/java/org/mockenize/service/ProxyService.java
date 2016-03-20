@@ -42,8 +42,8 @@ public class ProxyService implements ResponseService {
 		return proxyRepository.findAll();
 	}
 
-	public ProxyBean save(ProxyBean proxyBean) {
-		return proxyRepository.save(proxyBean);
+	public void save(ProxyBean proxyBean) {
+		proxyRepository.save(proxyBean);
 	}
 
 	public ProxyBean getByKey(String key) {
@@ -67,7 +67,7 @@ public class ProxyService implements ResponseService {
 	@Override
 	public Response getResponse(HttpServletRequest request, JsonNode requestBody) {
 		String path = request.getRequestURI();
-		ProxyBean proxyBean = proxyRepository.findByPath(path);
+		ProxyBean proxyBean = proxyRepository.findByKey(path);
 		Builder requestBuilder = client.target(proxyBean.getUrl()).path(getRequestPath(proxyBean.getPath(), path))
 				.request();
 		addHeaders(request, requestBuilder);

@@ -27,16 +27,21 @@ public class ScriptsController {
 
 	@Autowired
 	private ScriptService scriptService;
-	
+
 	@GET
 	@Path("/name/{scriptName}")
 	public String getScript(@PathParam("scriptName") String scriptName) throws ScriptException, NoSuchMethodException {
 		return scriptService.getByKey(scriptName).getValue();
 	}
+
+	@GET
+	public Collection<ScriptBean> getAll() {
+		return scriptService.getAll();
+	}
 	
 	@GET
-	@Path("/all")
-	public Collection<String> getAll() {
+	@Path("/keys")
+	public Collection<String> getAllKeys() {
 		return scriptService.getAllKeys();
 	}
 
@@ -44,6 +49,13 @@ public class ScriptsController {
 	@Path("/{scriptName}")
 	public Response delete(@PathParam("scriptName") String scriptName) {
 		scriptService.delete(new ScriptBean(scriptName, null));
+		return Response.noContent().build();
+	}
+
+	@DELETE
+	@Path("/all")
+	public Response delete() {
+		scriptService.deleteAll();
 		return Response.noContent().build();
 	}
 
@@ -57,8 +69,7 @@ public class ScriptsController {
 	@PUT
 	@Path("/{scriptName}")
 	public Response update(@PathParam("scriptName") String scriptName, String scriptValue) {
-		insert(scriptName, scriptValue);
-		return Response.noContent().build();
+		return insert(scriptName, scriptValue);
 	}
 
 }

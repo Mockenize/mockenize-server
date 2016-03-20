@@ -3,7 +3,7 @@ package org.mockenize.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ResourceBundle;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.StreamingOutput;
 
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import org.mockenize.model.ReturnBean;
+import org.mockenize.model.MultipleMockBean;
 import org.mockenize.service.FileService;
 import org.mockenize.service.MockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +32,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class FileController {
 
 	@Autowired
-	private ResourceBundle bundle;
-
-	@Autowired
 	private FileService fileService;
 
 	@Autowired
 	private MockService mockService;
+	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Path("/upload")
-	public ReturnBean upload(@FormDataParam("file") InputStream fileInputStream) throws JsonParseException, JsonMappingException, IOException {
-		fileService.loadFile(fileInputStream);
-		return new ReturnBean(bundle.getString("file.upload"));
+	public Collection<MultipleMockBean> upload(@FormDataParam("file") InputStream fileInputStream) throws JsonParseException, JsonMappingException, IOException {
+		return fileService.loadFile(fileInputStream);
 	}
 	
 	@GET

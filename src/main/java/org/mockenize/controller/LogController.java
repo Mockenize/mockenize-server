@@ -44,6 +44,7 @@ public class LogController {
     }
 
     @DELETE
+    @Path("/all")
     public Response deleteAll() {
         loggingService.deleteAll();
         return Response.noContent().build();

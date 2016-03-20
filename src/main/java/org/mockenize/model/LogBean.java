@@ -1,40 +1,43 @@
 package org.mockenize.model;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
+
+import org.mockenize.repository.Cacheable;
+
+import lombok.Data;
 
 /**
  * Created by rwatanabe on 08/02/16.
  */
 @Data
-public class LogBean implements Serializable {
+public class LogBean implements Serializable, Cacheable {
 
 	private static final long serialVersionUID = 1L;
 
-	private UUID key;
+	private String key;
 
-    private LogType type;
+	private LogType type;
 
-    private String url;
+	private String url;
 
-    private String path;
+	private String path;
 
-    private String method;
+	private String method;
 
-    private RequestLogBean request;
+	private RequestLogBean request;
 
-    private ResponseLogBean response;
+	private ResponseLogBean response;
 
-    private Date date = new Date();
+	private Date date = new Date();
 
-    protected LogBean() {
-    }
+	protected LogBean() {
+	}
 
-    public LogBean(UUID key, LogType type) {
-        this.key = key;
-        this.type = type;
-    }
+	public LogBean(UUID key, LogType type) {
+		this.key = key.toString();
+		this.type = type;
+	}
+
 }

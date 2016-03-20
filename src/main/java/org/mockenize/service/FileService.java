@@ -3,6 +3,8 @@ package org.mockenize.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,11 +42,13 @@ public class FileService {
 		}
 	}
 	
-	public void loadFile(InputStream inputStream) throws JsonParseException, JsonMappingException, IOException {
+	public Collection<MultipleMockBean> loadFile(InputStream inputStream) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
+		Collection<MultipleMockBean> mockBeans = new ArrayList<>();
 		MultipleMockBean[] multipleMockBeans = mapper.readValue(inputStream, MultipleMockBean[].class);
 		for (MultipleMockBean mockBean : multipleMockBeans) {
-			mockService.save(mockBean);
+			mockBeans.add(mockService.save(mockBean));
 		}
+		return mockBeans;
 	}
 }

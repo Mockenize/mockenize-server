@@ -9,7 +9,4 @@
 	<context:component-scan base-package="org.mockenize.service" />
 	<import resource="spring-hazelcast.xml" />
 
-	<bean id="i18n" class="java.util.ResourceBundle" factory-method="getBundle">
-		<constructor-arg value="i18n/messages" />
-	</bean>
 </beans>  

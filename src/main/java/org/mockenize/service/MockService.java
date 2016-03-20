@@ -64,7 +64,8 @@ public class MockService implements ResponseService {
 	}
 
 	public MultipleMockBean save(MultipleMockBean mockBean) {
-		return mockRepository.save(mockBean);
+		mockRepository.save(mockBean);
+		return mockBean;
 	}
 
 	public void delete(Collection<MockBean> mockBeans) {

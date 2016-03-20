@@ -1,5 +1,6 @@
 package org.mockenize;
 
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.mockenize.controller.*;
@@ -19,6 +20,8 @@ public class JerseyConfig extends ResourceConfig {
         registerFilters();
         registerControllers();
 
+        register(MultiPartFeature.class);
+        
         property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/_client.*");
     }
 
@@ -34,6 +37,7 @@ public class JerseyConfig extends ResourceConfig {
         register(MocksController.class);
         register(ProxiesController.class);
         register(LogController.class);
+        register(FileController.class);
     }
 
     private void registerFilters() {

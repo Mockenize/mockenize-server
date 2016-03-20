@@ -6,6 +6,7 @@ import java.net.URI;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.mockenize.repository.Cacheable;
 
 import lombok.Data;
 
@@ -13,7 +14,7 @@ import lombok.Data;
  * Created by rwatanabe on 08/02/16.
  */
 @Data
-public class ProxyBean implements Serializable {
+public class ProxyBean implements Serializable, Cacheable {
 
 	private static final long serialVersionUID = 1L;
 

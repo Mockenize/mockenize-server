@@ -26,12 +26,12 @@ public class LoggingService {
     }
 
     public LogBean getByKey(UUID key) {
-        return logRepository.findByKey(key);
+        return logRepository.findByKey(key.toString());
     }
 
 
     public void delete(UUID key) {
-        logRepository.delete(key);
+        logRepository.delete(key.toString());
     }
 
     public void deleteAll() {

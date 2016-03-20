@@ -1,48 +1,24 @@
 package org.mockenize.repository;
 
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
 import org.mockenize.model.LogBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.UUID;
+import com.hazelcast.core.HazelcastInstance;
 
 /**
  * Created by rwatanabe on 08/02/16.
  */
 @Repository
-public class LogRepository {
+public class LogRepository extends AbstractRepository<LogBean> {
 
-    private static final String CACHE_KEY = "logs";
+	private static final String CACHE_KEY = "logs";
 
-    private final IMap<UUID, LogBean> map;
+	@Autowired
+	public LogRepository(HazelcastInstance hazelcastInstance) {
+		super(hazelcastInstance, CACHE_KEY);
+		map.addIndex("key", false);
+		map.addIndex("date", true);
+	}
 
-    @Autowired
-    public LogRepository(HazelcastInstance hazelcastInstance) {
-        this.map = hazelcastInstance.getMap(CACHE_KEY);
-        map.addIndex("key", false);
-        map.addIndex("date", true);
-    }
-
-    public void save(LogBean logBean) {
-        map.put(logBean.getKey(), logBean);
-    }
-
-    public Collection<LogBean> findAll() {
-        return map.values();
-    }
-
-    public LogBean findByKey(UUID key) {
-        return map.get(key);
-    }
-
-    public void delete(UUID key) {
-        map.remove(key);
-    }
-
-    public void deleteAll() {
-        map.clear();
-    }
 }

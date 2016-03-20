@@ -2,7 +2,6 @@ package org.mockenize.service;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Set;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -53,6 +52,10 @@ public class ScriptService {
 	public void delete(ScriptBean scriptBean) {
 		scriptRespository.delete(scriptBean.getName());
 	}
+	
+	public void deleteAll() {
+		scriptRespository.deleteAll();
+	}
 
 	public void save(ScriptBean scriptBean) {
 		scriptRespository.save(scriptBean);
@@ -72,7 +75,8 @@ public class ScriptService {
 				.textNode(String.valueOf(invocable.invokeFunction(DEFAUL_FUNCTION_NAME, uri, stringBody)));
 	}
 
-	public Set<String> getAllKeys() {
+	public Collection<String> getAllKeys() {
 		return scriptRespository.findAllKeys();
 	}
+
 }

@@ -36,8 +36,8 @@ public class ProxiesController {
 
 	@POST
 	public Response create(ProxyBean proxyBean) {
-		ProxyBean createdProxyBean = proxyService.save(proxyBean);
-		return Response.status(Response.Status.CREATED).entity(createdProxyBean).build();
+		proxyService.save(proxyBean);
+		return Response.status(Response.Status.CREATED).entity(proxyBean).build();
 	}
 
 	@PUT
