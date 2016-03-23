@@ -68,14 +68,18 @@ public class MockService implements ResponseService {
 		return mockBean;
 	}
 
-	public void delete(Collection<MockBean> mockBeans) {
-		for (MockBean bean : mockBeans) {
-			mockRepository.delete(bean.getKey());
+	public void deleteAll(Collection<MockBean> mockBeans) {
+		if(mockBeans != null && !mockBeans.isEmpty()) {
+			for (MockBean bean : mockBeans) {
+				mockRepository.delete(bean.getKey());
+			}
+		} else {
+			mockRepository.deleteAll();
 		}
 	}
-
-	public void deleteAll() {
-		mockRepository.deleteAll();
+	
+	public void delete(MockBean mockBean) {
+		mockRepository.delete(mockBean.getKey());
 	}
 
 	public Boolean exists(String method, String path) {

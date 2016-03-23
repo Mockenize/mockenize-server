@@ -42,8 +42,8 @@ public class MocksController {
 
 	@DELETE
 	@Path("/all")
-	public Response deleteAll() {
-		mockService.deleteAll();
+	public Response deleteAll(Collection<MockBean> mockBeans) {
+		mockService.deleteAll(mockBeans);
 		return Response.noContent().build();
 	}
 
@@ -60,8 +60,8 @@ public class MocksController {
 	}
 
 	@DELETE
-	public Response delete(Collection<MockBean> mockBeans) {
-		mockService.delete(mockBeans);
+	public Response delete(MockBean mockBean) {
+		mockService.delete(mockBean);
 		return Response.noContent().build();
 	}
 }
