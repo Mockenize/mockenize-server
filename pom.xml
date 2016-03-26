@@ -158,8 +158,11 @@
 				<version>0.3.5</version>
 				<configuration>
 					<imageName>mockenize/mockenize-server</imageName>
-					<baseImage>java:7u65-jre</baseImage>
+					<baseImage>java:8</baseImage>
 					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+					<imageTags>
+           				<imageTag>${project.version}</imageTag>           			
+        			</imageTags>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
