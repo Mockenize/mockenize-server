@@ -48,15 +48,15 @@ public class ScriptsController {
 	@DELETE
 	@Path("/{scriptName}")
 	public Response delete(@PathParam("scriptName") String scriptName) {
-		scriptService.delete(new ScriptBean(scriptName, null));
-		return Response.noContent().build();
+		ScriptBean deletedScriptBean = scriptService.delete(new ScriptBean(scriptName, null));
+		return Response.ok(deletedScriptBean).build();
 	}
 
 	@DELETE
 	@Path("/all")
 	public Response delete() {
-		scriptService.deleteAll();
-		return Response.noContent().build();
+		Collection<ScriptBean> deletedScriptBeans = scriptService.deleteAll();
+		return Response.ok(deletedScriptBeans).build();
 	}
 
 	@POST

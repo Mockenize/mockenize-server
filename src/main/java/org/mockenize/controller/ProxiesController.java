@@ -54,8 +54,8 @@ public class ProxiesController {
 
 	@DELETE
 	public Response delete(ProxyBean proxyBean) {
-		proxyService.delete(proxyBean);
-		return Response.noContent().build();
+		ProxyBean deletedProxyBean = proxyService.delete(proxyBean);
+		return Response.ok(deletedProxyBean).build();
 	}
 
 	@DELETE

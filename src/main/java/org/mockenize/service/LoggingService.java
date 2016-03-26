@@ -30,11 +30,11 @@ public class LoggingService {
     }
 
 
-    public void delete(UUID key) {
-        logRepository.delete(key.toString());
+    public LogBean delete(UUID key) {
+        return logRepository.delete(key.toString());
     }
 
-    public void deleteAll() {
-        logRepository.deleteAll();
+    public Collection<LogBean> deleteAll() {
+       return logRepository.deleteAll();
     }
 }

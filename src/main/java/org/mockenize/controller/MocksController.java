@@ -30,7 +30,7 @@ public class MocksController {
 
 	@GET
 	public Response getAll() {
-		Collection<MultipleMockBean> mocks = mockService.getAll();
+		Collection<MockBean> mocks = mockService.getAll();
 		return Response.ok(mocks).build();
 	}
 
@@ -43,8 +43,8 @@ public class MocksController {
 	@DELETE
 	@Path("/all")
 	public Response deleteAll(Collection<MockBean> mockBeans) {
-		mockService.deleteAll(mockBeans);
-		return Response.noContent().build();
+		Collection<MockBean> deletedMockBeans = mockService.deleteAll(mockBeans);
+		return Response.ok(deletedMockBeans).build();
 	}
 
 	@PUT
@@ -61,7 +61,14 @@ public class MocksController {
 
 	@DELETE
 	public Response delete(MockBean mockBean) {
-		mockService.delete(mockBean);
-		return Response.noContent().build();
+		MockBean deletedMockBean = mockService.delete(mockBean);
+		return Response.ok(deletedMockBean).build();
+	}
+	
+	@DELETE
+	@Path("/{key}")
+	public Response delete(@PathParam("key") String key) {
+		MockBean deletedMockBean = mockService.delete(key);
+		return Response.ok(deletedMockBean).build();
 	}
 }

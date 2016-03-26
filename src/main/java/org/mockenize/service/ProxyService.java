@@ -56,12 +56,12 @@ public class ProxyService implements ResponseService {
 		return proxyBean;
 	}
 
-	public void delete(ProxyBean proxyBean) {
-		proxyRepository.delete(proxyBean);
+	public ProxyBean delete(ProxyBean proxyBean) {
+		return proxyRepository.delete(proxyBean);
 	}
 
-	public void deleteAll() {
-		proxyRepository.deleteAll();
+	public Collection<ProxyBean> deleteAll() {
+		return proxyRepository.deleteAll();
 	}
 
 	@Override

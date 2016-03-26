@@ -49,12 +49,12 @@ public class ScriptService {
 		return scriptBean;
 	}
 
-	public void delete(ScriptBean scriptBean) {
-		scriptRespository.delete(scriptBean.getName());
+	public ScriptBean delete(ScriptBean scriptBean) {
+		return scriptRespository.delete(scriptBean.getName());
 	}
 	
-	public void deleteAll() {
-		scriptRespository.deleteAll();
+	public Collection<ScriptBean> deleteAll() {
+		return scriptRespository.deleteAll();
 	}
 
 	public void save(ScriptBean scriptBean) {

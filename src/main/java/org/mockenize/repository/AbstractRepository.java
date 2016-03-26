@@ -51,16 +51,18 @@ public abstract class AbstractRepository<T extends Cacheable> {
 		}
 	}
 
-	public void delete(String key) {
-		map.remove(key);
+	public T delete(String key) {
+		return map.remove(key);
 	}
 	
-	public void delete(T t) {
-		map.remove(t.getKey());
+	public T delete(T t) {
+		return map.remove(t.getKey());
 	}
 
-	public void deleteAll() {
+	public Collection<T> deleteAll() {
+		Collection<T> values = findAll();
 		map.clear();
+		return values;		
 	}
 
 	public boolean exists(String key) {

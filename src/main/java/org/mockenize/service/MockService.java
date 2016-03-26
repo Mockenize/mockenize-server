@@ -1,6 +1,7 @@
 package org.mockenize.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -38,28 +39,28 @@ public class MockService implements ResponseService {
 
 	private Random random = new Random();
 
-	public MultipleMockBean getByKey(String key) {
+	public MockBean getByKey(String key) {
 		return mockRepository.findByKey(key);
 	}
 
 	public MockBean getByMethodAndPath(String method, String path) {
-		MultipleMockBean multipleMockBean = mockRepository.findByMethodAndPath(method, path);
-		MockBean mockBean = null;
-		if (multipleMockBean != null) {
-			sleep(multipleMockBean);
+		MockBean mockBean = mockRepository.findByMethodAndPath(method, path);
+		
+		if (mockBean instanceof MultipleMockBean) {
+			MultipleMockBean multipleMockBean = (MultipleMockBean) mockBean;
 			int size = multipleMockBean.getValues().size();
 			if (size > 1) {
-				mockBean = multipleMockBean.getValues().get(random.nextInt(size));
-			} else if (size == 0) {
-				mockBean = multipleMockBean;
-			} else {
+				mockBean = multipleMockBean.getValues().get(random.nextInt(size));			
+			} else if(!multipleMockBean.getValues().isEmpty()) {
 				mockBean = multipleMockBean.getValues().get(FIRST);
 			}
 		}
+		
+		sleep(mockBean);
 		return mockBean;
 	}
 
-	public Collection<MultipleMockBean> getAll() {
+	public Collection<MockBean> getAll() {
 		return mockRepository.findAll();
 	}
 
@@ -68,18 +69,27 @@ public class MockService implements ResponseService {
 		return mockBean;
 	}
 
-	public void deleteAll(Collection<MockBean> mockBeans) {
+	public Collection<MockBean> deleteAll(Collection<MockBean> mockBeans) {
+		Collection<MockBean> deletedMocks = new ArrayList<>();
 		if(mockBeans != null && !mockBeans.isEmpty()) {
 			for (MockBean bean : mockBeans) {
-				mockRepository.delete(bean.getKey());
+				MockBean deleted = mockRepository.delete(bean);
+				if(deleted != null) {
+					deletedMocks.add(deleted);
+				}
 			}
 		} else {
-			mockRepository.deleteAll();
+			deletedMocks = mockRepository.deleteAll();
 		}
+		return deletedMocks;
 	}
 	
-	public void delete(MockBean mockBean) {
-		mockRepository.delete(mockBean.getKey());
+	public MockBean delete(MockBean mockBean) {
+		return mockRepository.delete(mockBean);
+	}
+	
+	public MockBean delete(String key) {
+		return mockRepository.delete(key);		
 	}
 
 	public Boolean exists(String method, String path) {
@@ -119,12 +129,15 @@ public class MockService implements ResponseService {
 	private void sleep(MockBean mockBean) {
 		try {
 			int timeout = mockBean.getTimeout();
-			if (mockBean.getMaxTimeout() > 0) {
-				timeout = ThreadLocalRandom.current().nextInt(mockBean.getMinTimeout(), mockBean.getMaxTimeout());
+			if (timeout > 0 || mockBean.getMaxTimeout() > 0) {
+				if (mockBean.getMaxTimeout() > 0) {
+					timeout = ThreadLocalRandom.current().nextInt(mockBean.getMinTimeout(), mockBean.getMaxTimeout());
+				}
+				Thread.sleep(timeout * 1000);
 			}
-			Thread.sleep(timeout * 1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
+	
 }

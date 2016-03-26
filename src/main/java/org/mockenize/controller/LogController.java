@@ -39,14 +39,14 @@ public class LogController {
     @DELETE
     @Path("/{key}")
     public Response delete(@PathParam("key") UUID key) {
-        loggingService.delete(key);
-        return Response.noContent().build();
+        LogBean deletedLogBean = loggingService.delete(key);
+        return Response.ok(deletedLogBean).build();
     }
 
     @DELETE
     @Path("/all")
     public Response deleteAll() {
-        loggingService.deleteAll();
-        return Response.noContent().build();
+    	Collection<LogBean> deletedLogBeans = loggingService.deleteAll();
+        return Response.ok(deletedLogBeans).build();
     }
 }
