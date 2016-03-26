@@ -14,17 +14,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
-import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.mockenize.model.MultipleMockBean;
 import org.mockenize.service.FileService;
 import org.mockenize.service.MockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Path("/_mockenize/file")
@@ -39,10 +37,11 @@ public class FileController {
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Consumes(MediaType.APPLICATION_OCTET_STREAM)
 	@Path("/upload")
-	public Collection<MultipleMockBean> upload(@FormDataParam("file") InputStream fileInputStream) throws JsonParseException, JsonMappingException, IOException {
-		return fileService.loadFile(fileInputStream);
+	public Response upload(InputStream fileInputStream) throws IOException {
+		Collection<MultipleMockBean> mockBeans = fileService.loadFile(fileInputStream);
+		return Response.status(Response.Status.CREATED).entity(mockBeans).build();
 	}
 	
 	@GET

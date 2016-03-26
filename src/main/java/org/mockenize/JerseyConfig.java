@@ -3,7 +3,12 @@ package org.mockenize;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletProperties;
-import org.mockenize.controller.*;
+import org.mockenize.controller.FileController;
+import org.mockenize.controller.LogController;
+import org.mockenize.controller.MockenizeController;
+import org.mockenize.controller.MocksController;
+import org.mockenize.controller.ProxiesController;
+import org.mockenize.controller.ScriptsController;
 import org.mockenize.provider.filter.CrossOriginFilter;
 import org.mockenize.provider.filter.RequestLoggingFilter;
 import org.mockenize.provider.filter.ResponseLoggingFilter;
@@ -22,7 +27,7 @@ public class JerseyConfig extends ResourceConfig {
 
         register(MultiPartFeature.class);
         
-        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/_client.*");
+        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/_mockenize/admin.*");
     }
 
     private void registerProviders() {

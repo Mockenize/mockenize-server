@@ -1,10 +1,13 @@
 package org.mockenize.service;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,24 +16,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.io.CharStreams;
 
 @Service
 public class FileService {
 	
 	@Autowired
 	private MockService mockService;
+	
+	@Autowired
+	private ObjectMapper mapper = new ObjectMapper();
 
 	private Log log = LogFactory.getLog(getClass());
 
 	public void loadFile(File file) {
 		if (file != null && file.exists()) {
 			if (file.isFile() && file.canRead()) {
-				ObjectMapper mapper = new ObjectMapper();
-				try {
-					MultipleMockBean mockBean = mapper.readValue(file, MultipleMockBean.class);
-					mockService.save(mockBean);
+				try (FileInputStream fileInputStream = new FileInputStream(file)) {
+					String json = CharStreams.toString(new InputStreamReader(fileInputStream));
+					read(json);
 				} catch (IOException e) {
 					log.error(e);
 				}
@@ -42,13 +49,22 @@ public class FileService {
 		}
 	}
 	
-	public Collection<MultipleMockBean> loadFile(InputStream inputStream) throws JsonParseException, JsonMappingException, IOException {
-		ObjectMapper mapper = new ObjectMapper();
-		Collection<MultipleMockBean> mockBeans = new ArrayList<>();
-		MultipleMockBean[] multipleMockBeans = mapper.readValue(inputStream, MultipleMockBean[].class);
-		for (MultipleMockBean mockBean : multipleMockBeans) {
-			mockBeans.add(mockService.save(mockBean));
+	public Collection<MultipleMockBean> loadFile(InputStream fileInputStream) throws JsonParseException, JsonMappingException, IOException {
+		String json = CharStreams.toString(new InputStreamReader(fileInputStream));
+		return read(json);
+	}
+	
+	private Collection<MultipleMockBean> read(String json) throws JsonParseException, JsonMappingException, IOException {
+		if(json.startsWith("[")) {
+			Collection<MultipleMockBean> multipleMockBeans = mapper.readValue(json, new TypeReference<List<MultipleMockBean>>(){});
+			for (MultipleMockBean mockBean : multipleMockBeans) {
+				mockService.save(mockBean);
+			}
+			return multipleMockBeans;
+		} else {
+			MultipleMockBean mockBean = mapper.readValue(json, MultipleMockBean.class);
+			Arrays.asList(mockService.save(mockBean));
 		}
-		return mockBeans;
+		return Arrays.asList();
 	}
 }
