@@ -1,8 +1,7 @@
 # Mockenize
 REST API Testing Toolkit
 
-Mockenize is an efficient server to mockBean, supports random responses, timeout and any media type. To store the responses, Mockenize uses Hazelcast and to run the standalone server uses Spring Boot.
-Mockenize is free and open source. Contribute if you want!
+Mockenize is an efficient server to generate web mocks, supports random responses, timeout and any media type. To store the responses, Mockenize uses Hazelcast and to run the standalone server uses Spring Boot. Mockenize is free and open source. Contribute if you want!
 
 [![Build Status](https://travis-ci.org/Mockenize/mockenize-server.svg?branch=master)](https://travis-ci.org/Mockenize/mockenize-server)
 [ ![Download](https://api.bintray.com/packages/mockenize/mockenize/mockenize-server/images/download.svg) ](https://bintray.com/mockenize/mockenize/mockenize-server/_latestVersion)
