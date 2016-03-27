@@ -10,15 +10,21 @@ Mockenize is free and open source. Contribute if you want!
 
 - Running the server
 ```json
-java -jar mockenize-x.x.x.jar --server.port=8090 (default port is 8080)
+java -jar mockenize-server-x.x.x.jar --server.port=8090 (default port is 8080)
 ```
 
-- Adding basic responses mockBeen
+- You can use with docker too!
 
 ```json
-POST http://localhost:8080/_mockenize
+docker run -itd -p 8080:8080 mockenize/mockenize-server
+```
+
+- Adding basic mocks
+
+```json
+POST http://localhost:8080/_mockenize/mocks
 {
-  "url" : "/my_url/test",
+  "path" : "/foo/bar",
   "method" : "POST",
   "status" : 202,
   "body" : "Response success!!!",
@@ -28,12 +34,12 @@ POST http://localhost:8080/_mockenize
 }
 ```
 
-- Adding multiple responses mockBeen. The responses will return at random.
+- Adding multiple responses mocks. The responses will return at random.
 
 ```json
-POST http://localhost:8080/_mockenize
+POST http://localhost:8080/_mockenize/mocks
 {
-  "url" : "/my_url/test",
+  "path" : "/foo/bar",
   "method" : "POST",
   "values" : [
     {
@@ -57,9 +63,9 @@ POST http://localhost:8080/_mockenize
 - Using timeout response. (5 seconds)
 
 ```json
-POST http://localhost:8080/_mockenize
+POST http://localhost:8080/_mockenize/mocks
 {
-  "url" : "/my_url/test",
+  "path" : "/foo/bar",
   "method" : "POST",
   "timeout" : 5,
   "status" : 202,
@@ -73,9 +79,9 @@ POST http://localhost:8080/_mockenize
 - Using interval timeout response. (5 at 10 seconds)
 
 ```json
-POST http://localhost:8080/_mockenize
+POST http://localhost:8080/_mockenize/mocks
 {
-  "url" : "/my_url/test",
+  "path" : "/foo/bar",
   "method" : "POST",
   "minTimeout" : 5,
   "maxTimeout" : 10,
@@ -87,30 +93,32 @@ POST http://localhost:8080/_mockenize
 }
 ```
 
-- Clearing all responses mockBeen
+- Clearing all mocks.
 
 ```json
-DELETE http://localhost:8080/_mockenize/clearAll
+DELETE http://localhost:8080/_mockenize/mocks/all
 ```
 
-- Clearing unique or multiple response mockBean
+- Clearing unique or multiple mocks.
 
 ```json
-DELETE http://localhost:8080/_mockenize
+DELETE http://localhost:8080/_mockenize/mocks
 
 [
   {
-    "url" : "/my_url/test"
+    "path" : "/foo/bar",
+    "method" : "POST"
   },
   {
-    "url" : "/my_second_url/test"
+    "url" : "/my_second_url/test",
+    "method" : "GET"
   }
 ]
 ```
 
-- Use the admin to easily create your mockBeen.
+- Use the admin to easily create your mocks.
 
 ```json
-http://localhost:8080/_mockenize/index.html
+http://localhost:8080/_mockenize/admin/index.html
 ```
-![Mockenize](http://i.imgur.com/yda2C8u.png)
+![Mockenize](http://i.imgur.com/Yxu9dPO.png)
