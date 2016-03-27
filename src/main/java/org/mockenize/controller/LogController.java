@@ -1,15 +1,24 @@
 package org.mockenize.controller;
 
+import java.util.Collection;
+import java.util.UUID;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.mockenize.model.LogBean;
 import org.mockenize.service.LoggingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.Collection;
-import java.util.UUID;
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Created by rwatanabe on 08/02/16.
@@ -34,6 +43,13 @@ public class LogController {
     public Response getByKey(@PathParam("key") UUID key) {
         LogBean logBean = loggingService.getByKey(key);
         return Response.ok(logBean).build();
+    }
+    
+    @POST
+    @Path("find")
+    public Response findByFilters(JsonNode jsonNode) {
+    	Collection<LogBean> logBeans = loggingService.findByFilters(jsonNode);
+    	return Response.ok(logBeans).build();
     }
 
     @DELETE

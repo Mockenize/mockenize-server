@@ -10,6 +10,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
+import com.hazelcast.query.Predicate;
 
 public abstract class AbstractRepository<T extends Cacheable> {
 
@@ -67,6 +68,10 @@ public abstract class AbstractRepository<T extends Cacheable> {
 
 	public boolean exists(String key) {
 		return !map.keySet(new PathPredicate(key.toString())).isEmpty();
+	}
+	
+	public Collection<T> findByPredicate(Predicate<String, T> predicate) {
+		return map.values(predicate);
 	}
 
 }
