@@ -1,5 +1,6 @@
 package org.mockenize.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
@@ -59,11 +60,22 @@ public class ProxyService implements ResponseService {
 	public ProxyBean delete(ProxyBean proxyBean) {
 		return proxyRepository.delete(proxyBean);
 	}
-
-	public Collection<ProxyBean> deleteAll() {
-		return proxyRepository.deleteAll();
+	
+	public Collection<ProxyBean>  deleteAll(Collection<ProxyBean> proxyBeans) {
+		Collection<ProxyBean> deletedProxies = new ArrayList<>();
+		if(proxyBeans != null && !proxyBeans.isEmpty()) {
+			for (ProxyBean bean : proxyBeans) {
+				ProxyBean deleted = proxyRepository.delete(bean);
+				if(deleted != null) {
+					deletedProxies.add(deleted);
+				}
+			}
+		} else {
+			deletedProxies = proxyRepository.deleteAll();
+		}
+		return deletedProxies;
 	}
-
+	
 	@Override
 	public Response getResponse(HttpServletRequest request, JsonNode requestBody) {
 		String path = request.getRequestURI();
@@ -110,4 +122,5 @@ public class ProxyService implements ResponseService {
 	public boolean exists(String path) {
 		return proxyRepository.exists(path);
 	}
+
 }

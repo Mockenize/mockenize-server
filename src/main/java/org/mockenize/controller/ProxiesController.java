@@ -1,5 +1,7 @@
 package org.mockenize.controller;
 
+import java.util.Collection;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -60,8 +62,8 @@ public class ProxiesController {
 
 	@DELETE
 	@Path("/all")
-	public Response deleteAll() {
-		proxyService.deleteAll();
-		return Response.noContent().build();
+	public Response deleteAll(Collection<ProxyBean> proxyBeans) {
+		Collection<ProxyBean> deletedProxies = proxyService.deleteAll(proxyBeans);
+		return Response.ok(deletedProxies).build();
 	}
 }
