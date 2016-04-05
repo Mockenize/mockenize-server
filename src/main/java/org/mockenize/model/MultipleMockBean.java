@@ -1,10 +1,10 @@
 package org.mockenize.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import java.util.Collections;
 import java.util.List;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Created by rwatanabe on 10/02/16.
@@ -13,5 +13,26 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class MultipleMockBean extends MockBean {
 
-    private List<MockBean> values = Collections.emptyList();
+	private List<MockBean> values = Collections.emptyList();
+
+	private boolean random;
+
+	private int lastIndexResponse = -1;
+
+	public int nextIndex() {
+		if (++lastIndexResponse >= values.size()) {
+			lastIndexResponse = 0;
+		}
+		return lastIndexResponse;
+	}
+
+	public List<MockBean> getValues() {
+		if (!values.isEmpty()) {
+			for (MockBean mockBean : values) {
+				mockBean.setMethod(getMethod());
+				mockBean.setPath(getPath());
+			}
+		}
+		return this.values;
+	}
 }
