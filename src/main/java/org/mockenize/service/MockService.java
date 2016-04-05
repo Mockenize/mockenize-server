@@ -50,7 +50,14 @@ public class MockService implements ResponseService {
 			MultipleMockBean multipleMockBean = (MultipleMockBean) mockBean;
 			int size = multipleMockBean.getValues().size();
 			if (size > 1) {
-				mockBean = multipleMockBean.getValues().get(random.nextInt(size));			
+				int index = 0;
+				if(multipleMockBean.isRandom()) {
+					index = random.nextInt(size);
+				} else {
+					index = multipleMockBean.nextIndex();
+					mockRepository.save(mockBean);
+				}
+				mockBean = multipleMockBean.getValues().get(index);			
 			} else if(!multipleMockBean.getValues().isEmpty()) {
 				mockBean = multipleMockBean.getValues().get(FIRST);
 			}
