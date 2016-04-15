@@ -14,6 +14,7 @@ import org.mockenize.repository.ScriptRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -71,8 +72,12 @@ public class ScriptService {
 		scriptEngine.eval(PARSE_FUNCTION + scriptBean.getValue());
 		Invocable invocable = (Invocable) scriptEngine;
 		String stringBody = body != null ? body.toString() : EMPTY;
-		return objectMapper.createObjectNode()
-				.textNode(String.valueOf(invocable.invokeFunction(DEFAUL_FUNCTION_NAME, uri, stringBody)));
+		String ret = String.valueOf(invocable.invokeFunction(DEFAUL_FUNCTION_NAME, uri, stringBody));
+		try {
+			return objectMapper.readTree(ret);
+		} catch(JsonParseException parseException) {		
+			return objectMapper.createObjectNode().textNode(ret);
+		}
 	}
 
 	public Collection<String> getAllKeys() {
