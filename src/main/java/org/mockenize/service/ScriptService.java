@@ -27,7 +27,7 @@ public class ScriptService {
 
 	private static final String PARSE_FUNCTION = ""
 			+ "function _func(url, body) {"
-			+ "try{obj=JSON.parse(body)}catch(ex){};"
+			+ "obj=null;try{obj=JSON.parse(body)}catch(ex){};"
 			+ "ret = func(url, body, obj);"
 			+ "try{return (typeof ret === 'string') ? ret : JSON.stringify(ret)}catch(ex){};"
 			+ "return ret};";

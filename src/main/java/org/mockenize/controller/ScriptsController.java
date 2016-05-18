@@ -30,6 +30,7 @@ public class ScriptsController {
 
 	@GET
 	@Path("/name/{scriptName}")
+	@Produces(MediaType.TEXT_PLAIN)
 	public String getScript(@PathParam("scriptName") String scriptName) throws ScriptException, NoSuchMethodException {
 		return scriptService.getByKey(scriptName).getValue();
 	}
@@ -38,7 +39,7 @@ public class ScriptsController {
 	public Collection<ScriptBean> getAll() {
 		return scriptService.getAll();
 	}
-	
+
 	@GET
 	@Path("/keys")
 	public Collection<String> getAllKeys() {
@@ -61,6 +62,7 @@ public class ScriptsController {
 
 	@POST
 	@Path("/{scriptName}")
+	@Consumes(MediaType.TEXT_PLAIN)
 	public Response insert(@PathParam("scriptName") String scriptName, String scriptValue) {
 		scriptService.save(new ScriptBean(scriptName, scriptValue));
 		return Response.noContent().build();
@@ -68,6 +70,7 @@ public class ScriptsController {
 
 	@PUT
 	@Path("/{scriptName}")
+	@Consumes(MediaType.TEXT_PLAIN)
 	public Response update(@PathParam("scriptName") String scriptName, String scriptValue) {
 		return insert(scriptName, scriptValue);
 	}
