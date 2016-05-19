@@ -44,7 +44,7 @@ public class ScriptService {
 		ScriptBean scriptBean = scriptRespository.findByKey(jsName);
 
 		if (scriptBean == null) {
-			throw new ScriptNotFoundException();
+			throw new ScriptNotFoundException(jsName);
 		}
 
 		return scriptBean;

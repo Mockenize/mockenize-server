@@ -30,7 +30,7 @@ public class MockenizeService {
             return proxyService.getResponse(request, body);
         }
 
-        throw new ResourceNotFoundException();
+        throw new ResourceNotFoundException(path);
     }
 
     public Response getResponse(HttpServletRequest request) {

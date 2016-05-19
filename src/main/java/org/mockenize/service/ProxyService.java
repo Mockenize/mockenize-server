@@ -16,7 +16,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.mockenize.exception.ProxyPathException;
-import org.mockenize.exception.ResourceNotFoundException;
 import org.mockenize.model.ProxyBean;
 import org.mockenize.repository.ProxyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,13 +47,7 @@ public class ProxyService implements ResponseService {
 	}
 
 	public ProxyBean getByKey(String key) {
-		ProxyBean proxyBean = proxyRepository.findByKey(key);
-
-		if (proxyBean == null) {
-			throw new ResourceNotFoundException();
-		}
-
-		return proxyBean;
+		return proxyRepository.findByKey(key);
 	}
 
 	public ProxyBean delete(ProxyBean proxyBean) {

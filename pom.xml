@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>org.mockenize</groupId>
 			<artifactId>mockenize-client</artifactId>
-			<version>0.0.4-SNAPSHOT</version>
+			<version>0.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -161,7 +161,7 @@
 					<baseImage>java:8</baseImage>
 					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
 					<imageTags>
-           				<imageTag>${project.version}</imageTag>           			
+           				<imageTag>${project.version}</imageTag>
         			</imageTags>
 					<resources>
 						<resource>
