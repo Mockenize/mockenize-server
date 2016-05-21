@@ -4,7 +4,7 @@
 
 	<groupId>org.mockenize</groupId>
 	<artifactId>mockenize-server</artifactId>
-	<version>0.0.11</version>
+	<version>0.0.12-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Mockenize</name>
@@ -14,7 +14,7 @@
 		<url>https://github.com/Mockenize/mockenize-server</url>
 		<connection>scm:git:git@github.com:Mockenize/mockenize-server.git</connection>
 		<developerConnection>scm:git:git@github.com:Mockenize/mockenize-server.git</developerConnection>
-		<tag>mockenize-server-0.0.11</tag>
+		<tag>HEAD</tag>
 	</scm>
 	<dependencyManagement>
 		<dependencies>
