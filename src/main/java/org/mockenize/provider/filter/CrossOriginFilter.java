@@ -7,10 +7,6 @@ import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.MultivaluedMap;
 
-/**
- * Created by rwatanabe on 05/02/16.
- */
-
 public class CrossOriginFilter implements ContainerResponseFilter {
 
     @Override

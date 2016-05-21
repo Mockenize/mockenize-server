@@ -67,7 +67,7 @@ public abstract class AbstractRepository<T extends Cacheable> {
 	}
 
 	public boolean exists(String key) {
-		return !map.keySet(new PathPredicate(key.toString())).isEmpty();
+		return !map.keySet(new PathPredicate(key)).isEmpty();
 	}
 	
 	public Collection<T> findByPredicate(Predicate<String, T> predicate) {

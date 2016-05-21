@@ -4,9 +4,6 @@ import java.util.Map;
 
 import com.hazelcast.query.Predicate;
 
-/**
- * Created by rwatanabe on 10/02/16.
- */
 public class PathPredicate implements Predicate<String, Object> {
 
 	private static final long serialVersionUID = 4605050326503577349L;

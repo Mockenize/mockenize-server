@@ -27,9 +27,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 
-/**
- * Created by rwatanabe on 08/02/16.
- */
 @Provider
 @Component
 @Priority(Integer.MIN_VALUE)

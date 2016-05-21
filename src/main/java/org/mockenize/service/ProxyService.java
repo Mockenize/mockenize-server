@@ -24,9 +24,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Strings;
 
-/**
- * Created by rwatanabe on 08/02/16.
- */
 @Service
 public class ProxyService implements ResponseService {
 

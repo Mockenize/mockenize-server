@@ -6,13 +6,10 @@ import org.mockenize.model.LogBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-/**
- * Created by rwatanabe on 08/02/16.
- */
 @Repository
 public class RequestLogRepository {
 
-    private final String CACHE_KEY = "request-log";
+    private static final String CACHE_KEY = "request-log";
 
     private final IQueue<Object> queue;
 

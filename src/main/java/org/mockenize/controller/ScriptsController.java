@@ -2,7 +2,6 @@ package org.mockenize.controller;
 
 import java.util.Collection;
 
-import javax.script.ScriptException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -31,7 +30,7 @@ public class ScriptsController {
 	@GET
 	@Path("/name/{scriptName}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getScript(@PathParam("scriptName") String scriptName) throws ScriptException, NoSuchMethodException {
+	public String getScript(@PathParam("scriptName") String scriptName) {
 		return scriptService.getByKey(scriptName).getValue();
 	}
 

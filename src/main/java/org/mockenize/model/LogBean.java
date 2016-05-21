@@ -8,9 +8,6 @@ import org.mockenize.repository.Cacheable;
 
 import lombok.Data;
 
-/**
- * Created by rwatanabe on 08/02/16.
- */
 @Data
 public class LogBean implements Serializable, Cacheable {
 

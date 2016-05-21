@@ -6,9 +6,6 @@ import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/**
- * Created by rwatanabe on 10/02/16.
- */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class MultipleMockBean extends MockBean {

@@ -12,6 +12,9 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource("classpath:spring/application-context.xml")
 public class StandaloneApplication {
 
+	private StandaloneApplication() {
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(StandaloneApplication.class, args);
 	}

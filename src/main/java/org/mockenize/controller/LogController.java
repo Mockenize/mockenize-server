@@ -20,9 +20,6 @@ import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-/**
- * Created by rwatanabe on 08/02/16.
- */
 @Controller
 @Path("/_mockenize/logs")
 @Produces(MediaType.APPLICATION_JSON)

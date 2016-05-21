@@ -13,9 +13,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.hazelcast.query.Predicate;
 import com.hazelcast.query.Predicates;
 
-/**
- * Created by rwatanabe on 08/02/16.
- */
 @Service
 public class LoggingService {
 

@@ -9,9 +9,6 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
-/**
- * Created by rwatanabe on 09/02/16.
- */
 @Provider
 @Component
 public class JacksonProvider implements ContextResolver<ObjectMapper> {

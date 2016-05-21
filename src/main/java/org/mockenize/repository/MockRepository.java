@@ -10,9 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.hazelcast.core.HazelcastInstance;
 
-/**
- * Created by rwatanabe on 05/02/16.
- */
 @Repository
 public class MockRepository extends AbstractRepository<MockBean> {
 

@@ -4,6 +4,7 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.mockenize.controller.FileController;
+import org.mockenize.controller.InfoController;
 import org.mockenize.controller.LogController;
 import org.mockenize.controller.MockenizeController;
 import org.mockenize.controller.MocksController;
@@ -12,7 +13,7 @@ import org.mockenize.controller.ScriptsController;
 import org.mockenize.provider.filter.CrossOriginFilter;
 import org.mockenize.provider.filter.RequestLoggingFilter;
 import org.mockenize.provider.filter.ResponseLoggingFilter;
-import org.mockenize.provider.mapper.ExceptionMapper;
+import org.mockenize.provider.mapper.ExceptionMapperImpl;
 import org.mockenize.provider.mapper.JacksonProvider;
 import org.mockenize.provider.mapper.TextPlainMessageBodyWriter;
 import org.springframework.stereotype.Component;
@@ -31,7 +32,7 @@ public class JerseyConfig extends ResourceConfig {
     }
 
     private void registerProviders() {
-        register(ExceptionMapper.class);
+        register(ExceptionMapperImpl.class);
         register(TextPlainMessageBodyWriter.class);
         register(JacksonProvider.class);
     }
@@ -43,6 +44,7 @@ public class JerseyConfig extends ResourceConfig {
         register(ProxiesController.class);
         register(LogController.class);
         register(FileController.class);
+        register(InfoController.class);
     }
 
     private void registerFilters() {

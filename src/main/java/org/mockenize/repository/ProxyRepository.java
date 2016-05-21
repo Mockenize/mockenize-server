@@ -6,9 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import com.hazelcast.core.HazelcastInstance;
 
-/**
- * Created by rwatanabe on 08/02/16.
- */
 @Repository
 public class ProxyRepository extends AbstractRepository<ProxyBean> {
 

@@ -10,15 +10,12 @@ import org.mockenize.repository.Cacheable;
 
 import lombok.Data;
 
-/**
- * Created by rwatanabe on 08/02/16.
- */
 @Data
 public class ProxyBean implements Serializable, Cacheable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String _ = "_";
+	private static final String UNDERLINE = "_";
 
 	private static final String SLASH = "/";
 
@@ -34,7 +31,8 @@ public class ProxyBean implements Serializable, Cacheable {
 	@NotNull
 	private URI url;
 
+	@Override
 	public String getKey() {
-		return path.toLowerCase().replaceAll(SLASH, _);
+		return path.toLowerCase().replaceAll(SLASH, UNDERLINE);
 	}
 }

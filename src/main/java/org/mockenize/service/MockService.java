@@ -1,6 +1,5 @@
 package org.mockenize.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -8,18 +7,18 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
-import org.mockenize.exception.ScriptExecutionException;
 import org.mockenize.model.MockBean;
 import org.mockenize.model.MultipleMockBean;
 import org.mockenize.model.ScriptBean;
 import org.mockenize.repository.MockRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +27,8 @@ import com.google.common.base.Strings;
 
 @Service
 public class MockService implements ResponseService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(MockService.class);
 
 	private static final int FIRST = 0;
 
@@ -45,24 +46,24 @@ public class MockService implements ResponseService {
 
 	public MockBean getByMethodAndPath(String method, String path) {
 		MockBean mockBean = mockRepository.findByMethodAndPath(method, path);
-		
+
 		if (mockBean instanceof MultipleMockBean) {
 			MultipleMockBean multipleMockBean = (MultipleMockBean) mockBean;
 			int size = multipleMockBean.getValues().size();
 			if (size > 1) {
-				int index = 0;
-				if(multipleMockBean.isRandom()) {
+				int index;
+				if (multipleMockBean.isRandom()) {
 					index = random.nextInt(size);
 				} else {
 					index = multipleMockBean.nextIndex();
 					mockRepository.save(mockBean);
 				}
-				mockBean = multipleMockBean.getValues().get(index);			
-			} else if(!multipleMockBean.getValues().isEmpty()) {
+				mockBean = multipleMockBean.getValues().get(index);
+			} else if (!multipleMockBean.getValues().isEmpty()) {
 				mockBean = multipleMockBean.getValues().get(FIRST);
 			}
 		}
-		
+
 		sleep(mockBean);
 		return mockBean;
 	}
@@ -78,10 +79,10 @@ public class MockService implements ResponseService {
 
 	public Collection<MockBean> deleteAll(Collection<MockBean> mockBeans) {
 		Collection<MockBean> deletedMocks = new ArrayList<>();
-		if(mockBeans != null && !mockBeans.isEmpty()) {
+		if (mockBeans != null && !mockBeans.isEmpty()) {
 			for (MockBean bean : mockBeans) {
 				MockBean deleted = mockRepository.delete(bean);
-				if(deleted != null) {
+				if (deleted != null) {
 					deletedMocks.add(deleted);
 				}
 			}
@@ -90,13 +91,13 @@ public class MockService implements ResponseService {
 		}
 		return deletedMocks;
 	}
-	
+
 	public MockBean delete(MockBean mockBean) {
 		return mockRepository.delete(mockBean);
 	}
-	
+
 	public MockBean delete(String key) {
-		return mockRepository.delete(key);		
+		return mockRepository.delete(key);
 	}
 
 	public Boolean exists(String method, String path) {
@@ -119,13 +120,8 @@ public class MockService implements ResponseService {
 	private JsonNode getResponseBody(MockBean mockBean, String path, JsonNode body) {
 		if (!Strings.isNullOrEmpty(mockBean.getScriptName())) {
 			ScriptBean scriptBean = scriptService.getByKey(mockBean.getScriptName());
-			try {
-				return scriptService.execute(scriptBean, path, body);
-			} catch (NoSuchMethodException | ScriptException | IOException e) {
-				throw new ScriptExecutionException(e);
-			}
+			return scriptService.execute(scriptBean, path, body);
 		}
-
 		return mockBean.getBody();
 	}
 
@@ -140,11 +136,11 @@ public class MockService implements ResponseService {
 				if (mockBean.getMaxTimeout() > 0) {
 					timeout = ThreadLocalRandom.current().nextInt(mockBean.getMinTimeout(), mockBean.getMaxTimeout());
 				}
-				Thread.sleep(timeout * 1000);
+				Thread.sleep(Long.valueOf(timeout) * 1000);
 			}
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			LOGGER.error("Thread woke", e);
 		}
 	}
-	
+
 }

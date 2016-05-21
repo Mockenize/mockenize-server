@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
-/**
- * Created by rwatanabe on 08/02/16.
- */
 public abstract class AbstractSerializer<T> implements StreamSerializer<T>{
 
     @Autowired

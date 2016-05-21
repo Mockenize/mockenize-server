@@ -15,9 +15,7 @@ import org.mockenize.model.MultipleMockBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.CharStreams;
 
@@ -49,12 +47,12 @@ public class FileService {
 		}
 	}
 	
-	public Collection<MultipleMockBean> loadFile(InputStream fileInputStream) throws JsonParseException, JsonMappingException, IOException {
+	public Collection<MultipleMockBean> loadFile(InputStream fileInputStream) throws IOException {
 		String json = CharStreams.toString(new InputStreamReader(fileInputStream));
 		return read(json);
 	}
 	
-	private Collection<MultipleMockBean> read(String json) throws JsonParseException, JsonMappingException, IOException {
+	private Collection<MultipleMockBean> read(String json) throws IOException {
 		if(json.startsWith("[")) {
 			Collection<MultipleMockBean> multipleMockBeans = mapper.readValue(json, new TypeReference<List<MultipleMockBean>>(){});
 			for (MultipleMockBean mockBean : multipleMockBeans) {

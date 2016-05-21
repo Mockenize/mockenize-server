@@ -8,6 +8,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.mockenize.exception.ScriptExecutionException;
 import org.mockenize.exception.ScriptNotFoundException;
 import org.mockenize.model.ScriptBean;
 import org.mockenize.repository.ScriptRespository;
@@ -25,12 +26,9 @@ public class ScriptService {
 
 	private static final String DEFAUL_FUNCTION_NAME = "_func";
 
-	private static final String PARSE_FUNCTION = ""
-			+ "function _func(url, body) {"
-			+ "obj=null;try{obj=JSON.parse(body)}catch(ex){};"
-			+ "ret = func(url, body, obj);"
-			+ "try{return (typeof ret === 'string') ? ret : JSON.stringify(ret)}catch(ex){};"
-			+ "return ret};";
+	private static final String PARSE_FUNCTION = "function _func(url, body) {"
+			+ "obj=null;try{obj=JSON.parse(body)}catch(ex){};" + "ret = func(url, body, obj);"
+			+ "try{return (typeof ret === 'string') ? ret : JSON.stringify(ret)}catch(ex){};" + "return ret};";
 
 	private static final String EMPTY = "";
 
@@ -53,7 +51,7 @@ public class ScriptService {
 	public ScriptBean delete(ScriptBean scriptBean) {
 		return scriptRespository.delete(scriptBean.getName());
 	}
-	
+
 	public Collection<ScriptBean> deleteAll() {
 		return scriptRespository.deleteAll();
 	}
@@ -66,16 +64,23 @@ public class ScriptService {
 		return scriptRespository.findAll();
 	}
 
-	public JsonNode execute(ScriptBean scriptBean, String uri, JsonNode body)
-			throws ScriptException, NoSuchMethodException, IOException {
-		ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName(ENGINE_NAME);
-		scriptEngine.eval(PARSE_FUNCTION + scriptBean.getValue());
-		Invocable invocable = (Invocable) scriptEngine;
-		String stringBody = body != null ? body.toString() : EMPTY;
-		String ret = String.valueOf(invocable.invokeFunction(DEFAUL_FUNCTION_NAME, uri, stringBody));
+	public JsonNode execute(ScriptBean scriptBean, String uri, JsonNode body) {
+		try {
+			ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName(ENGINE_NAME);
+			scriptEngine.eval(PARSE_FUNCTION + scriptBean.getValue());
+			Invocable invocable = (Invocable) scriptEngine;
+			String stringBody = body != null ? body.toString() : EMPTY;
+			String ret = String.valueOf(invocable.invokeFunction(DEFAUL_FUNCTION_NAME, uri, stringBody));
+			return parse(ret);
+		} catch (NoSuchMethodException | ScriptException | IOException e) {
+			throw new ScriptExecutionException(e);
+		}
+	}
+
+	private JsonNode parse(String ret) throws IOException {
 		try {
 			return objectMapper.readTree(ret);
-		} catch(JsonParseException parseException) {		
+		} catch (JsonParseException parseException) {
 			return objectMapper.createObjectNode().textNode(ret);
 		}
 	}

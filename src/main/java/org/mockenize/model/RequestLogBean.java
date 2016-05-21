@@ -1,18 +1,19 @@
 package org.mockenize.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import lombok.Data;
-
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by rwatanabe on 08/02/16.
- */
+import com.fasterxml.jackson.databind.JsonNode;
+
+import lombok.Data;
+
 @Data
-public class RequestLogBean {
+public class RequestLogBean implements Serializable {
 
-    private Map<String, String> headers = new HashMap<>();
+	private static final long serialVersionUID = 1L;
 
-    private JsonNode body;
+	private Map<String, String> headers = new HashMap<>();
+
+	private transient JsonNode body;
 }

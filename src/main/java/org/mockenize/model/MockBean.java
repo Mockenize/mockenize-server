@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class MockBean implements Cacheable {
 
-	private static final String _ = "_";
+	private static final String UNDERLINE = "_";
 
 	private static final String SLASH = "/";
 
@@ -42,15 +42,17 @@ public class MockBean implements Cacheable {
 
 	private String scriptName;
 
+	@Override
 	public String getKey() {
-		return method.concat(path.replaceAll(SLASH, _));
+		return method.concat(path.replaceAll(SLASH, UNDERLINE));
 	}
 
 	public void setPath(String path) {
 		if (path != null && !path.startsWith(SLASH)) {
-			path = SLASH + path;
+			this.path = SLASH + path;
+		} else {
+			this.path = path;
 		}
-		this.path = path;
 	}
 
 }

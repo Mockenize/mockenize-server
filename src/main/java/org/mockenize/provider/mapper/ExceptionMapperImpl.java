@@ -1,16 +1,16 @@
 package org.mockenize.provider.mapper;
 
-import org.mockenize.model.ReturnBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-public class ExceptionMapper implements javax.ws.rs.ext.ExceptionMapper<Throwable> {
+import org.mockenize.model.ReturnBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(ExceptionMapper.class);
+public class ExceptionMapperImpl implements javax.ws.rs.ext.ExceptionMapper<Throwable> {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionMapperImpl.class);
 
 	private static final String CONTENT_TYPE = "Content-Type";
 

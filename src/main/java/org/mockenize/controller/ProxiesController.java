@@ -18,9 +18,6 @@ import org.mockenize.service.ProxyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-/**
- * Created by rwatanabe on 08/02/16.
- */
 @Controller
 @Path("/_mockenize/proxies")
 @Produces(MediaType.APPLICATION_JSON)
