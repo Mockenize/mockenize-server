@@ -158,7 +158,7 @@
 				<version>0.3.5</version>
 				<configuration>
 					<imageName>mockenize/mockenize-server</imageName>
-					<baseImage>java:8</baseImage>
+					<baseImage>java:8-jre-alpine</baseImage>
 					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
 					<imageTags>
 						<imageTag>${project.version}</imageTag>
