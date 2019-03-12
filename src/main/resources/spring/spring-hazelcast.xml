@@ -15,8 +15,6 @@
                 </hz:join>
             </hz:network>
 		
-			<hz:map name="logs" max-size="500" time-to-live-seconds="1800" eviction-policy="LFU" />
-
 			<hz:serialization>
 				<hz:serializers>
 					<hz:serializer type-class="org.mockenize.model.LogBean" implementation="logBeanSerializer" />

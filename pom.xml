@@ -155,7 +155,7 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.3.5</version>
+				<version>1.2.0</version>
 				<configuration>
 					<imageName>mockenize/mockenize-server</imageName>
 					<baseImage>java:8-jre-alpine</baseImage>
